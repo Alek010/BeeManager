@@ -8,4 +8,4 @@ Data of beekeper's work is recorded in Excel file. At the same time it is a simp
 ## BeeManager DB structure
 At present under construction...
 
-<img src= "ProjectInfo/BeeManager DB structure.jpg" width = 400>
+<img src= "ProjectInfo/BeeManager DB structure.jpg" width = 700>
