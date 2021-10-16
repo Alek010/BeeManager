@@ -45,7 +45,7 @@ namespace BM_ConsoleUI
         {
             foreach (var item in _unitsStorage)
             {
-                Console.WriteLine(item.Id);
+                Console.WriteLine(_unitsStorage.IndexOf(item));
                 Console.WriteLine(item.Unit);
             }
         }
