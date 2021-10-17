@@ -17,6 +17,7 @@ namespace BM_ConsoleUI
             ProductStorageList.Add(new Product() { Id = 1, Name = "Medus" });
             ProductStorageList.Add(new Product() { Id = 2, Name = "Šūnu medus" });
             ProductStorageList.Add(new Product() { Id = 3, Name = "Vasks" });
+            ProductStorageList.Add(new Product() { Id = 4, Name = "Ziedputekšņi" });
         }
 
         public static Product GetProductById(int id)
