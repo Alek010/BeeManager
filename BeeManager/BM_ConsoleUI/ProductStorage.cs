@@ -9,44 +9,49 @@ namespace BM_ConsoleUI
     public class ProductStorage
     {
 
-        public static List<Product> _productStorage { get; set; }
+        private static List<Product> ProductStorageList { get; set; }
 
         static ProductStorage()
         {
-            _productStorage = new List<Product>();
-            _productStorage.Add(new Product() { Id = 1, Name = "Medus" });
-            _productStorage.Add(new Product() { Id = 2, Name = "Šūnu medus" });
-            _productStorage.Add(new Product() { Id = 3, Name = "Vasks" });
+            ProductStorageList = new List<Product>();
+            ProductStorageList.Add(new Product() { Id = 1, Name = "Medus" });
+            ProductStorageList.Add(new Product() { Id = 2, Name = "Šūnu medus" });
+            ProductStorageList.Add(new Product() { Id = 3, Name = "Vasks" });
         }
 
         public static Product GetProductById(int id)
         {
-            return _productStorage.FirstOrDefault(p => p.Id == id);
+            return ProductStorageList.FirstOrDefault(p => p.Id == id);
         }
 
         public static string GetProductNameById(int id)
         {
-            return _productStorage.FirstOrDefault(p => p.Id == id).Name;
+            return ProductStorageList.FirstOrDefault(p => p.Id == id).Name;
         }
 
         public static void DeleteProductById(int id)
         {
             var product = GetProductById(id);
-            _productStorage.Remove(product);
+            ProductStorageList.Remove(product);
         }
 
         public static void AddProduct(string productName)
         {
-            _productStorage.Add(new Product() { Id = _productStorage.LastOrDefault().Id + 1, Name = productName });
+            ProductStorageList.Add(new Product() { Id = ProductStorageList.LastOrDefault().Id + 1, Name = productName });
         }
 
         public static void GetProducts()
         {
-            foreach (var item in _productStorage)
+            foreach (var item in ProductStorageList)
             {
-                Console.WriteLine(_productStorage.IndexOf(item));
+                Console.WriteLine(ProductStorageList.IndexOf(item));
                 Console.WriteLine(item.Name);
             }
+        }
+
+        public static List<Product> GetProductsList()
+        {
+            return ProductStorageList;
         }
     }
 }

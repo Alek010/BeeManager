@@ -8,46 +8,51 @@ namespace BM_ConsoleUI
 {
     public class UnitsOfMeasurementStorage
     {
-        public static List<UnitsOfMeasurement> _unitsStorage { get; set; }
+        private static List<UnitsOfMeasurement> UnitsStorageList { get; set; }
 
         static UnitsOfMeasurementStorage()
         {
-            _unitsStorage = new List<UnitsOfMeasurement>();
-            _unitsStorage.Add(new UnitsOfMeasurement() { Id = 1, Unit = "Litrs" });
-            _unitsStorage.Add(new UnitsOfMeasurement() { Id = 2, Unit = "Gabals" });
-            _unitsStorage.Add(new UnitsOfMeasurement() { Id = 3, Unit = "Kilograms" });
-            _unitsStorage.Add(new UnitsOfMeasurement() { Id = 4, Unit = "Grams" });
-            _unitsStorage.Add(new UnitsOfMeasurement() { Id = 5, Unit = "Iepakojums" });
+            UnitsStorageList = new List<UnitsOfMeasurement>();
+            UnitsStorageList.Add(new UnitsOfMeasurement() { Id = 1, Unit = "Litrs" });
+            UnitsStorageList.Add(new UnitsOfMeasurement() { Id = 2, Unit = "Gabals" });
+            UnitsStorageList.Add(new UnitsOfMeasurement() { Id = 3, Unit = "Kilograms" });
+            UnitsStorageList.Add(new UnitsOfMeasurement() { Id = 4, Unit = "Grams" });
+            UnitsStorageList.Add(new UnitsOfMeasurement() { Id = 5, Unit = "Iepakojums" });
         }
 
         public static UnitsOfMeasurement GetUnitById(int id)
         {
-            return _unitsStorage.FirstOrDefault(p => p.Id == id);
+            return UnitsStorageList.FirstOrDefault(p => p.Id == id);
         }
 
         public static string GetUnitNameById(int id)
         {
-            return _unitsStorage.FirstOrDefault(p => p.Id == id).Unit;
+            return UnitsStorageList.FirstOrDefault(p => p.Id == id).Unit;
         }
 
         public static void DeleteProductById(int id)
         {
             var product = GetUnitById(id);
-            _unitsStorage.Remove(product);
+            UnitsStorageList.Remove(product);
         }
 
         public static void AddUnit(string unitName)
         {
-            _unitsStorage.Add(new UnitsOfMeasurement() { Id = _unitsStorage.LastOrDefault().Id + 1, Unit = unitName });
+            UnitsStorageList.Add(new UnitsOfMeasurement() { Id = UnitsStorageList.LastOrDefault().Id + 1, Unit = unitName });
         }
 
-        public static void GetProducts()
+        public static void GetUnits()
         {
-            foreach (var item in _unitsStorage)
+            foreach (var item in UnitsStorageList)
             {
-                Console.WriteLine(_unitsStorage.IndexOf(item));
+                Console.WriteLine(UnitsStorageList.IndexOf(item));
                 Console.WriteLine(item.Unit);
             }
+        }
+
+        public static List<UnitsOfMeasurement> GetUnitsList()
+        {
+            return UnitsStorageList;
         }
     }
 }
