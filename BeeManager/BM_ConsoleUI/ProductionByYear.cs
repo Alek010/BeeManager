@@ -13,7 +13,9 @@ namespace BM_ConsoleUI
         {
             Summary = new List<ProductionSummary>();
 
-            ProductionRecords = ProductionStorage.GetProductionList();
+            var productionStorage = new ProductionStorage();
+
+            ProductionRecords = productionStorage.GetProductionList();
 
             CalculateSummary();
         }

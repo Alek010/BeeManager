@@ -9,9 +9,9 @@ namespace BM_ConsoleUI
     public class ProductStorage
     {
 
-        private static List<Product> ProductStorageList { get; set; }
+        private List<Product> ProductStorageList { get; set; }
 
-        static ProductStorage()
+        public ProductStorage()
         {
             ProductStorageList = new List<Product>();
             ProductStorageList.Add(new Product() { Id = 1, Name = "Medus" });
@@ -20,28 +20,28 @@ namespace BM_ConsoleUI
             ProductStorageList.Add(new Product() { Id = 4, Name = "Ziedputekšņi" });
         }
 
-        public static Product GetProductById(int id)
+        public Product GetProductById(int id)
         {
             return ProductStorageList.FirstOrDefault(p => p.Id == id);
         }
 
-        public static string GetProductNameById(int id)
+        public string GetProductNameById(int id)
         {
             return ProductStorageList.FirstOrDefault(p => p.Id == id).Name;
         }
 
-        public static void DeleteProductById(int id)
+        public void DeleteProductById(int id)
         {
             var product = GetProductById(id);
             ProductStorageList.Remove(product);
         }
 
-        public static void AddProduct(string productName)
+        public void AddProduct(string productName)
         {
             ProductStorageList.Add(new Product() { Id = ProductStorageList.LastOrDefault().Id + 1, Name = productName });
         }
 
-        public static void GetProducts()
+        public void GetProducts()
         {
             foreach (var item in ProductStorageList)
             {
@@ -50,7 +50,7 @@ namespace BM_ConsoleUI
             }
         }
 
-        public static List<Product> GetProductsList()
+        public List<Product> GetProductsList()
         {
             return ProductStorageList;
         }

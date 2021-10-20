@@ -17,15 +17,21 @@ namespace BM_ConsoleUI
                 UnitsOfMeasurementId = 2
             };
 
-            ProductionStorage.AddProduction(newProd);
-            ProductionStorage.DeleteProductionById(2);
-            ProductionStorage.GetProduction();
+            var newProductionStorage = new ProductionStorage();
 
-            ProductStorage.AddProduct("Test");
-            ProductStorage.GetProducts();
+            newProductionStorage.AddProduction(newProd);
+            newProductionStorage.DeleteProductionById(2);
+            newProductionStorage.GetProduction();
 
-            UnitsOfMeasurementStorage.AddUnit("Centimetrs");
-            UnitsOfMeasurementStorage.GetUnits();
+            var newProductStorage = new ProductStorage();
+
+            newProductStorage.AddProduct("Test");
+            newProductStorage.GetProducts();
+
+            var unitsOfMeasurementStorage = new UnitsOfMeasurementStorage();
+
+            unitsOfMeasurementStorage.AddUnit("Centimetrs");
+            unitsOfMeasurementStorage.GetUnits();
 
             Console.WriteLine("\nSaražotās produkcijas žūrnāls.\n");
 

@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BM_ConsoleUI
 {
     public class ProductionStorage
     {
+        private List<Production> ProductionStorageList { get; set; }
 
-        private static List<Production> ProductionStorageList { get; set; }
-
-        static ProductionStorage()
+        public ProductionStorage()
         {
             ProductionStorageList = new List<Production>();
             ProductionStorageList.Add(new Production() { Id = 1, Date = new DateTime(2019, 9, 30), ProductId = 1, Quantity = 21.5, UnitsOfMeasurementId = 1 });
@@ -22,7 +19,7 @@ namespace BM_ConsoleUI
             ProductionStorageList.Add(new Production() { Id = 6, Date = new DateTime(2021, 9, 2), ProductId = 1, Quantity = 86, UnitsOfMeasurementId = 1 });
         }
 
-        public static void AddProduction(Production production)
+        public void AddProduction(Production production)
         {
             ProductionStorageList.Add(new Production() { 
                 Id = ProductionStorageList.LastOrDefault().Id + 1,
@@ -33,30 +30,34 @@ namespace BM_ConsoleUI
             });
         }
 
-        public static Production GetProductionById(int id)
+        public Production GetProductionById(int id)
         {
             return ProductionStorageList.FirstOrDefault(p => p.Id == id);
         }
 
-        public static void DeleteProductionById(int id)
+        public void DeleteProductionById(int id)
         {
             var product = GetProductionById(id);
             ProductionStorageList.Remove(product);
         }
 
-        public static void GetProduction()
+        public void GetProduction()
         {
+
+            var productStorage = new ProductStorage();
+            var unitsOfMeasurementStorage = new UnitsOfMeasurementStorage();
+
             foreach (var item in ProductionStorageList)
             {
                 Console.WriteLine(item.Id);
                 Console.WriteLine(item.Date);
-                Console.WriteLine(ProductStorage.GetProductNameById(item.ProductId));
+                Console.WriteLine(productStorage.GetProductNameById(item.ProductId));
                 Console.WriteLine(item.Quantity);
-                Console.WriteLine(UnitsOfMeasurementStorage.GetUnitNameById(item.ProductId));
+                Console.WriteLine(unitsOfMeasurementStorage.GetUnitNameById(item.ProductId));
             }
         }
 
-        public static List<Production> GetProductionList()
+        public List<Production> GetProductionList()
         {
             return ProductionStorageList;
         }

@@ -8,9 +8,9 @@ namespace BM_ConsoleUI
 {
     public class UnitsOfMeasurementStorage
     {
-        private static List<UnitsOfMeasurement> UnitsStorageList { get; set; }
+        private  List<UnitsOfMeasurement> UnitsStorageList { get; set; }
 
-        static UnitsOfMeasurementStorage()
+        public UnitsOfMeasurementStorage()
         {
             UnitsStorageList = new List<UnitsOfMeasurement>();
             UnitsStorageList.Add(new UnitsOfMeasurement() { Id = 1, Unit = "Litrs" });
@@ -20,28 +20,28 @@ namespace BM_ConsoleUI
             UnitsStorageList.Add(new UnitsOfMeasurement() { Id = 5, Unit = "Iepakojums" });
         }
 
-        public static UnitsOfMeasurement GetUnitById(int id)
+        public UnitsOfMeasurement GetUnitById(int id)
         {
             return UnitsStorageList.FirstOrDefault(p => p.Id == id);
         }
 
-        public static string GetUnitNameById(int id)
+        public string GetUnitNameById(int id)
         {
             return UnitsStorageList.FirstOrDefault(p => p.Id == id).Unit;
         }
 
-        public static void DeleteProductById(int id)
+        public void DeleteProductById(int id)
         {
             var product = GetUnitById(id);
             UnitsStorageList.Remove(product);
         }
 
-        public static void AddUnit(string unitName)
+        public void AddUnit(string unitName)
         {
             UnitsStorageList.Add(new UnitsOfMeasurement() { Id = UnitsStorageList.LastOrDefault().Id + 1, Unit = unitName });
         }
 
-        public static void GetUnits()
+        public void GetUnits()
         {
             foreach (var item in UnitsStorageList)
             {
@@ -50,7 +50,7 @@ namespace BM_ConsoleUI
             }
         }
 
-        public static List<UnitsOfMeasurement> GetUnitsList()
+        public List<UnitsOfMeasurement> GetUnitsList()
         {
             return UnitsStorageList;
         }

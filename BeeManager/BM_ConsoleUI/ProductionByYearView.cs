@@ -13,22 +13,24 @@ namespace BM_ConsoleUI
             SetHeaderOfView();
 
             ProductionByYear productionByYear = new ProductionByYear();
+            var productStorage = new ProductStorage();
+            var unitsOfMeasurementStorage = new UnitsOfMeasurementStorage();
 
             for (int i = 0; i < productionByYear.Summary.Count; i++)
             {
                 if (productionByYear.Summary[i].ProductId == 2)
                 {
                     Console.WriteLine($" {productionByYear.Summary[i].Year}\t" +
-                                      $" {ProductStorage.GetProductNameById(productionByYear.Summary[i].ProductId)}\t" +
+                                      $" {productStorage.GetProductNameById(productionByYear.Summary[i].ProductId)}\t" +
                                       $" {productionByYear.Summary[i].Quantity}\t" +
-                                      $" {UnitsOfMeasurementStorage.GetUnitNameById(productionByYear.Summary[i].UnitOfMeasurementId)}");
+                                      $" {unitsOfMeasurementStorage.GetUnitNameById(productionByYear.Summary[i].UnitOfMeasurementId)}");
                 }
                 else
                 {
                     Console.WriteLine($" {productionByYear.Summary[i].Year}\t" +
-                                      $"    {ProductStorage.GetProductNameById(productionByYear.Summary[i].ProductId)}\t" +
+                                      $"    {productStorage.GetProductNameById(productionByYear.Summary[i].ProductId)}\t" +
                                       $" {productionByYear.Summary[i].Quantity}\t" +
-                                      $" {UnitsOfMeasurementStorage.GetUnitNameById(productionByYear.Summary[i].UnitOfMeasurementId)}");
+                                      $" {unitsOfMeasurementStorage.GetUnitNameById(productionByYear.Summary[i].UnitOfMeasurementId)}");
                 }
 
             }
