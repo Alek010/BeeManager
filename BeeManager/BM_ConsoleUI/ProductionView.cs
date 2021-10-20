@@ -9,37 +9,39 @@ namespace BM_ConsoleUI
 {
     class ProductionView
     {
+        IProductServices _productServices;
+        IProductionStorage _productionStorage;
+        IUnitsOfMeasurementServices _unitsOfMeasurementServices;
         private List<Production> Records { get; set; }
 
 
-        public ProductionView()
+        public ProductionView(IProductionStorage productionStorage, IProductServices productServices, IUnitsOfMeasurementServices unitsOfMeasurementServices)
         {
-            var productionStorage = new ProductionStorage();
-            Records = productionStorage.GetProductionList();
+            _productionStorage = productionStorage;
+            _productServices = productServices;
+            _unitsOfMeasurementServices = unitsOfMeasurementServices;
+            Records = _productionStorage.GetProductionList();
         }
 
         public void RenderRecordsInConsole()
         {
             SetHeadersOfView();
 
-            var productServices = new ProductServices();
-            var unitsOfMeasurementService = new UnitsOfMeasurementServices();
-
             for (int i = 0; i < Records.Count; i++)
             {
                 if (Records[i].ProductId == 2)
                 {
                     Console.WriteLine($" {Records[i].Date.ToShortDateString()}\t" +
-                                      $" {productServices.GetProductNameById(Records[i].ProductId)}\t" +
+                                      $" {_productServices.GetProductNameById(Records[i].ProductId)}\t" +
                                       $" {Records[i].Quantity}\t" +
-                                      $" {unitsOfMeasurementService.GetUnitNameById(Records[i].UnitsOfMeasurementId)}");
+                                      $" {_unitsOfMeasurementServices.GetUnitNameById(Records[i].UnitsOfMeasurementId)}");
                 }
                 else
                 {
                     Console.WriteLine($" {Records[i].Date.ToShortDateString()}\t" +
-                                      $"    {productServices.GetProductNameById(Records[i].ProductId)}\t" +
+                                      $"    {_productServices.GetProductNameById(Records[i].ProductId)}\t" +
                                       $" {Records[i].Quantity}\t" +
-                                      $" {unitsOfMeasurementService.GetUnitNameById(Records[i].UnitsOfMeasurementId)}");
+                                      $" {_unitsOfMeasurementServices.GetUnitNameById(Records[i].UnitsOfMeasurementId)}");
                 }
 
             }

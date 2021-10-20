@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace BM_ConsoleUI
 {
-    public class ProductionStorage
+    public class ProductionStorage : IProductionStorage
     {
         private List<Production> ProductionStorageList { get; set; }
 
@@ -40,8 +40,6 @@ namespace BM_ConsoleUI
             var product = GetProductionById(id);
             ProductionStorageList.Remove(product);
         }
-
-        
 
         public List<Production> GetProductionList()
         {

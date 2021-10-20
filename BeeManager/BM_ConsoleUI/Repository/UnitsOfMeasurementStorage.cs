@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BM_ConsoleUI
 {
-    public class UnitsOfMeasurementStorage
+    public class UnitsOfMeasurementStorage : IUnitsOfMeasurementStorage
     {
-        private  List<UnitsOfMeasurement> UnitsStorageList { get; set; }
+        private List<UnitsOfMeasurement> UnitsStorageList { get; set; }
 
         public UnitsOfMeasurementStorage()
         {

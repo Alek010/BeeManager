@@ -4,18 +4,19 @@ using System.Linq;
 
 namespace BM_ConsoleUI
 {
-    public class ProductionByYear
+    public class ProductionByYear : IProductionByYear
     {
+        IProductionStorage _productionStorage;
+
         public List<ProductionSummary> Summary { get; set; }
         private List<Production> ProductionRecords { get; set; }
 
-        public ProductionByYear()
+        public ProductionByYear(IProductionStorage productionStorage)
         {
+            _productionStorage = productionStorage;
             Summary = new List<ProductionSummary>();
 
-            var productionStorage = new ProductionStorage();
-
-            ProductionRecords = productionStorage.GetProductionList();
+            ProductionRecords = _productionStorage.GetProductionList();
 
             CalculateSummary();
         }
@@ -23,12 +24,12 @@ namespace BM_ConsoleUI
         private void CalculateSummary()
         {
 
-            var result = ProductionRecords.GroupBy(x => (x.Date.Year, 
-                                                         x.ProductId, 
+            var result = ProductionRecords.GroupBy(x => (x.Date.Year,
+                                                         x.ProductId,
                                                          x.UnitsOfMeasurementId))
-                                          .Select(g => (g.Key.Year, 
-                                                        g.Key.ProductId, 
-                                                        Total: g.Sum(x => x.Quantity), 
+                                          .Select(g => (g.Key.Year,
+                                                        g.Key.ProductId,
+                                                        Total: g.Sum(x => x.Quantity),
                                                         g.Key.UnitsOfMeasurementId));
 
             foreach (var item in result)

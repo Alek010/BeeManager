@@ -6,20 +6,23 @@ using System.Threading.Tasks;
 
 namespace BM_ConsoleUI.Services
 {
-    public class ProductServices
+    public class ProductServices : IProductServices
     {
+        IProductStorage _productStorage;
+        public ProductServices(IProductStorage productStorage)
+        {
+            _productStorage = productStorage;
+        }
         public string GetProductNameById(int id)
         {
-            var productStorage = new ProductStorage();
-            var productList = productStorage.GetProductsList();
+            var productList = _productStorage.GetProductsList();
 
             return productList.FirstOrDefault(p => p.Id == id).Name;
         }
 
         public void GetProducts()
         {
-            var productStorage = new ProductStorage();
-            var productList = productStorage.GetProductsList();
+            var productList = _productStorage.GetProductsList();
 
             foreach (var item in productList)
             {
