@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BM_ConsoleUI.Services;
+using System;
 using System.Text;
 
 namespace BM_ConsoleUI
@@ -18,20 +19,23 @@ namespace BM_ConsoleUI
             };
 
             var newProductionStorage = new ProductionStorage();
+            var newProductionServices = new ProductionServices();
+            var newProductServices = new ProductServices();
 
             newProductionStorage.AddProduction(newProd);
             newProductionStorage.DeleteProductionById(2);
-            newProductionStorage.GetProduction();
+            newProductionServices.GetProduction();
 
             var newProductStorage = new ProductStorage();
 
             newProductStorage.AddProduct("Test");
-            newProductStorage.GetProducts();
+            newProductServices.GetProducts();
 
             var unitsOfMeasurementStorage = new UnitsOfMeasurementStorage();
+            var unitsOfMeasurementServices = new UnitsOfMeasurementServices();
 
             unitsOfMeasurementStorage.AddUnit("Centimetrs");
-            unitsOfMeasurementStorage.GetUnits();
+            unitsOfMeasurementServices.GetUnits();
 
             Console.WriteLine("\nSaražotās produkcijas žūrnāls.\n");
 

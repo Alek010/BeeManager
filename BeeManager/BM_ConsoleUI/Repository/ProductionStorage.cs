@@ -41,21 +41,7 @@ namespace BM_ConsoleUI
             ProductionStorageList.Remove(product);
         }
 
-        public void GetProduction()
-        {
-
-            var productStorage = new ProductStorage();
-            var unitsOfMeasurementStorage = new UnitsOfMeasurementStorage();
-
-            foreach (var item in ProductionStorageList)
-            {
-                Console.WriteLine(item.Id);
-                Console.WriteLine(item.Date);
-                Console.WriteLine(productStorage.GetProductNameById(item.ProductId));
-                Console.WriteLine(item.Quantity);
-                Console.WriteLine(unitsOfMeasurementStorage.GetUnitNameById(item.ProductId));
-            }
-        }
+        
 
         public List<Production> GetProductionList()
         {

@@ -25,11 +25,6 @@ namespace BM_ConsoleUI
             return UnitsStorageList.FirstOrDefault(p => p.Id == id);
         }
 
-        public string GetUnitNameById(int id)
-        {
-            return UnitsStorageList.FirstOrDefault(p => p.Id == id).Unit;
-        }
-
         public void DeleteProductById(int id)
         {
             var product = GetUnitById(id);
@@ -39,15 +34,6 @@ namespace BM_ConsoleUI
         public void AddUnit(string unitName)
         {
             UnitsStorageList.Add(new UnitsOfMeasurement() { Id = UnitsStorageList.LastOrDefault().Id + 1, Unit = unitName });
-        }
-
-        public void GetUnits()
-        {
-            foreach (var item in UnitsStorageList)
-            {
-                Console.WriteLine(UnitsStorageList.IndexOf(item));
-                Console.WriteLine(item.Unit);
-            }
         }
 
         public List<UnitsOfMeasurement> GetUnitsList()

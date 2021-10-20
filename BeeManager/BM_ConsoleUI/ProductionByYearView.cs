@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BM_ConsoleUI.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,24 +14,24 @@ namespace BM_ConsoleUI
             SetHeaderOfView();
 
             ProductionByYear productionByYear = new ProductionByYear();
-            var productStorage = new ProductStorage();
-            var unitsOfMeasurementStorage = new UnitsOfMeasurementStorage();
+            var productServices = new ProductServices();
+            var unitsOfMeasurementService = new UnitsOfMeasurementServices();
 
             for (int i = 0; i < productionByYear.Summary.Count; i++)
             {
                 if (productionByYear.Summary[i].ProductId == 2)
                 {
                     Console.WriteLine($" {productionByYear.Summary[i].Year}\t" +
-                                      $" {productStorage.GetProductNameById(productionByYear.Summary[i].ProductId)}\t" +
+                                      $" {productServices.GetProductNameById(productionByYear.Summary[i].ProductId)}\t" +
                                       $" {productionByYear.Summary[i].Quantity}\t" +
-                                      $" {unitsOfMeasurementStorage.GetUnitNameById(productionByYear.Summary[i].UnitOfMeasurementId)}");
+                                      $" {unitsOfMeasurementService.GetUnitNameById(productionByYear.Summary[i].UnitOfMeasurementId)}");
                 }
                 else
                 {
                     Console.WriteLine($" {productionByYear.Summary[i].Year}\t" +
-                                      $"    {productStorage.GetProductNameById(productionByYear.Summary[i].ProductId)}\t" +
+                                      $"    {productServices.GetProductNameById(productionByYear.Summary[i].ProductId)}\t" +
                                       $" {productionByYear.Summary[i].Quantity}\t" +
-                                      $" {unitsOfMeasurementStorage.GetUnitNameById(productionByYear.Summary[i].UnitOfMeasurementId)}");
+                                      $" {unitsOfMeasurementService.GetUnitNameById(productionByYear.Summary[i].UnitOfMeasurementId)}");
                 }
 
             }

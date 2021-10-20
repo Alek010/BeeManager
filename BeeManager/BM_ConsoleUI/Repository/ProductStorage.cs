@@ -25,11 +25,6 @@ namespace BM_ConsoleUI
             return ProductStorageList.FirstOrDefault(p => p.Id == id);
         }
 
-        public string GetProductNameById(int id)
-        {
-            return ProductStorageList.FirstOrDefault(p => p.Id == id).Name;
-        }
-
         public void DeleteProductById(int id)
         {
             var product = GetProductById(id);
@@ -39,15 +34,6 @@ namespace BM_ConsoleUI
         public void AddProduct(string productName)
         {
             ProductStorageList.Add(new Product() { Id = ProductStorageList.LastOrDefault().Id + 1, Name = productName });
-        }
-
-        public void GetProducts()
-        {
-            foreach (var item in ProductStorageList)
-            {
-                Console.WriteLine(ProductStorageList.IndexOf(item));
-                Console.WriteLine(item.Name);
-            }
         }
 
         public List<Product> GetProductsList()

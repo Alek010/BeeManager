@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BM_ConsoleUI.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,24 +22,24 @@ namespace BM_ConsoleUI
         {
             SetHeadersOfView();
 
-            var productStorage = new ProductStorage();
-            var unitsOfMeasurementStorage = new UnitsOfMeasurementStorage();
+            var productServices = new ProductServices();
+            var unitsOfMeasurementService = new UnitsOfMeasurementServices();
 
             for (int i = 0; i < Records.Count; i++)
             {
                 if (Records[i].ProductId == 2)
                 {
                     Console.WriteLine($" {Records[i].Date.ToShortDateString()}\t" +
-                                      $" {productStorage.GetProductNameById(Records[i].ProductId)}\t" +
+                                      $" {productServices.GetProductNameById(Records[i].ProductId)}\t" +
                                       $" {Records[i].Quantity}\t" +
-                                      $" {unitsOfMeasurementStorage.GetUnitNameById(Records[i].UnitsOfMeasurementId)}");
+                                      $" {unitsOfMeasurementService.GetUnitNameById(Records[i].UnitsOfMeasurementId)}");
                 }
                 else
                 {
                     Console.WriteLine($" {Records[i].Date.ToShortDateString()}\t" +
-                                      $"    {productStorage.GetProductNameById(Records[i].ProductId)}\t" +
+                                      $"    {productServices.GetProductNameById(Records[i].ProductId)}\t" +
                                       $" {Records[i].Quantity}\t" +
-                                      $" {unitsOfMeasurementStorage.GetUnitNameById(Records[i].UnitsOfMeasurementId)}");
+                                      $" {unitsOfMeasurementService.GetUnitNameById(Records[i].UnitsOfMeasurementId)}");
                 }
 
             }
