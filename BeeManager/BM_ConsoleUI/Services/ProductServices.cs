@@ -16,16 +16,15 @@ namespace BM_ConsoleUI.Services
             return productList.FirstOrDefault(p => p.Id == id).Name;
         }
 
-        public void GetProducts()
+        public int GetProductIdByName(string name)
         {
             var productStorage = new ProductStorage();
             var productList = productStorage.GetProductsList();
 
-            foreach (var item in productList)
-            {
-                Console.WriteLine(productList.IndexOf(item));
-                Console.WriteLine(item.Name);
-            }
+            return productList.Find(p => p.Name == name).Id;
         }
+
+
+
     }
 }

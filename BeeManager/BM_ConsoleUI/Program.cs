@@ -1,4 +1,5 @@
 ﻿using BM_ConsoleUI.Services;
+using BM_ConsoleUI.Views;
 using System;
 using System.Text;
 
@@ -10,6 +11,17 @@ namespace BM_ConsoleUI
         {
             Console.OutputEncoding = Encoding.UTF8;
 
+            Console.WriteLine("Labdien!");
+
+            Console.WriteLine("\nSaražotās produkcijas žūrnāls.\n");
+
+            ProductionView productionView = new ProductionView();
+
+            productionView.RenderRecordsInConsole();
+
+
+            Console.WriteLine("\nIevadiet jaunu ierakstu par saražoto produkciju.");
+
             var newProd = new Production()
             {
                 Date = new DateTime(2021, 10, 1),
@@ -17,35 +29,24 @@ namespace BM_ConsoleUI
                 Quantity = 45.52,
                 UnitsOfMeasurementId = 2
             };
+            Console.WriteLine("Jaunajā sarakstā jābūt 7 ierakstiem (NESTRĀDĀ!!!)");
 
             var newProductionStorage = new ProductionStorage();
-            var newProductionServices = new ProductionServices();
-            var newProductServices = new ProductServices();
-
             newProductionStorage.AddProduction(newProd);
-            newProductionStorage.DeleteProductionById(2);
-            newProductionServices.GetProduction();
 
-            var newProductStorage = new ProductStorage();
-
-            newProductStorage.AddProduct("Test");
-            newProductServices.GetProducts();
-
-            var unitsOfMeasurementStorage = new UnitsOfMeasurementStorage();
-            var unitsOfMeasurementServices = new UnitsOfMeasurementServices();
-
-            unitsOfMeasurementStorage.AddUnit("Centimetrs");
-            unitsOfMeasurementServices.GetUnits();
-
-            Console.WriteLine("\nSaražotās produkcijas žūrnāls.\n");
-
-            ProductionView productionView = new ProductionView();
             productionView.RenderRecordsInConsole();
 
-            Console.WriteLine("\nPārskats par saražoto produkciju pēc gada un produkcijas veida.\n");
 
-            ProductionByYearView productionByYearView = new ProductionByYearView();
-            productionByYearView.RenderSummaryInConsole();
+            Console.WriteLine("\nSaražotās produkcijas žūrnāls par 2020.\n");
+
+            ProductionSummaryView productionSummaryView = new ProductionSummaryView();
+            productionSummaryView.FilterProduction(2020);
+
+            Console.WriteLine("\nSaražotās produkcijas žūrnāls atlasīts pēc medus produkta.\n");
+            productionSummaryView.FilterProduction("Medus");
+
+
+
 
 
 
