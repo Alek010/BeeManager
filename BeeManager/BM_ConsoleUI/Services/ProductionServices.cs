@@ -11,6 +11,10 @@ namespace BM_ConsoleUI.Services
         IProductServices _productServices;
         IUnitsOfMeasurementServices _unitsOfMeasurementServices;
 
+        public ProductionServices()
+        {
+        }
+
         public ProductionServices(IProductionStorage productionStorage, IProductServices productServices, IUnitsOfMeasurementServices unitsOfMeasurementServices)
         {
             _productionStorage = productionStorage;
