@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BM_ConsoleUI
 {
-    public class UnitsOfMeasurementStorage
+    public class UnitsOfMeasurementStorage : IUnitsOfMeasurementStorage
     {
-        private  List<UnitsOfMeasurement> UnitsStorageList { get; set; }
+        private List<UnitsOfMeasurement> UnitsStorageList { get; set; }
 
         public UnitsOfMeasurementStorage()
         {

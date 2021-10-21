@@ -1,28 +1,46 @@
-﻿
-
-using BM_ConsoleUI.Models;
+﻿using BM_ConsoleUI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace BM_ConsoleUI.Services
 {
-    public class ProductionServices
+    public class ProductionServices : IProductionServices
     {
-        private List<ProductionSummary> Summary { get; set; }
-        private List<Production> ProductionRecords { get; set; }
+        IProductionStorage _productionStorage;
+        IProductServices _productServices;
+        IUnitsOfMeasurementServices _unitsOfMeasurementServices;
 
-        public ProductionServices()
+        public ProductionServices(IProductionStorage productionStorage, IProductServices productServices, IUnitsOfMeasurementServices unitsOfMeasurementServices)
         {
-            Summary = new List<ProductionSummary>();
-
-            var productionStorage = new ProductionStorage();
-
-            ProductionRecords = productionStorage.GetProductionList();
+            _productionStorage = productionStorage;
+            _productServices = productServices;
+            _unitsOfMeasurementServices = unitsOfMeasurementServices;
         }
 
-        public List<ProductionSummary> ReturnSummaryList()
+        public void GetProduction()
         {
-            var result = ProductionRecords.GroupBy(x => (x.Date.Year,
+            var productionList = _productionStorage.GetProductionList();
+
+            foreach (var item in productionList)
+            {
+                Console.WriteLine(item.Id);
+                Console.WriteLine(item.Date);
+                Console.WriteLine(_productServices.GetProductNameById(item.ProductId));
+                Console.WriteLine(item.Quantity);
+                Console.WriteLine(_unitsOfMeasurementServices.GetUnitNameById(item.ProductId));
+            }
+        }
+
+        public List<Production> GetProductionList()
+        {
+            return _productionStorage.GetProductionList(); ;
+        }
+
+        public List<ProductionSummary> ReturnSummaryList(List<Production> list)
+        {
+            var summary = new List<ProductionSummary>();
+            var result = list.GroupBy(x => (x.Date.Year,
                                                     x.ProductId,
                                                     x.UnitsOfMeasurementId))
                                         .Select(g => (g.Key.Year,
@@ -39,13 +57,11 @@ namespace BM_ConsoleUI.Services
                 productionSummary.Quantity = item.Total;
                 productionSummary.UnitOfMeasurementId = item.UnitsOfMeasurementId;
 
-                Summary.Add(productionSummary);
+                summary.Add(productionSummary);
             }
 
-            return Summary;
+            return summary;
         }
-
-
-
     }
 }
+

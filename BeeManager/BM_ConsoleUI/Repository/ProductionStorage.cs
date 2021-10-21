@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace BM_ConsoleUI
 {
-    public class ProductionStorage
+    public class ProductionStorage : IProductionStorage
     {
         private List<Production> ProductionStorageList { get; set; }
 
@@ -20,14 +20,13 @@ namespace BM_ConsoleUI
                 ProductionStorageList.Add(new Production() { Id = 4, Date = new DateTime(2020, 7, 4), ProductId = 1, Quantity = 32, UnitsOfMeasurementId = 1 });
                 ProductionStorageList.Add(new Production() { Id = 5, Date = new DateTime(2021, 4, 18), ProductId = 1, Quantity = 18.7, UnitsOfMeasurementId = 1 });
                 ProductionStorageList.Add(new Production() { Id = 6, Date = new DateTime(2021, 9, 2), ProductId = 1, Quantity = 86, UnitsOfMeasurementId = 1 });
-
             }
-
         }
 
         public void AddProduction(Production production)
         {
-            ProductionStorageList.Add(new Production() { 
+            ProductionStorageList.Add(new Production()
+            {
                 Id = ProductionStorageList.LastOrDefault().Id + 1,
                 Date = production.Date,
                 ProductId = production.ProductId,
@@ -46,8 +45,6 @@ namespace BM_ConsoleUI
             var product = GetProductionById(id);
             ProductionStorageList.Remove(product);
         }
-
-        
 
         public List<Production> GetProductionList()
         {
