@@ -1,54 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace BM_ConsoleUI
 {
     public class ProductionStorage : IProductionStorage
     {
-        private List<Production> ProductionStorageList { get; set; }
-
-        public ProductionStorage()
-        {
-            ProductionStorageList = new List<Production>();
-
-            if (ProductionStorageList.Count == 0)
-            {
-                ProductionStorageList.Add(new Production() { Id = 1, Date = new DateTime(2019, 9, 30), ProductId = 1, Quantity = 21.5, UnitsOfMeasurementId = 1 });
-                ProductionStorageList.Add(new Production() { Id = 2, Date = new DateTime(2020, 10, 16), ProductId = 2, Quantity = 3, UnitsOfMeasurementId = 2 });
-                ProductionStorageList.Add(new Production() { Id = 3, Date = new DateTime(2020, 3, 20), ProductId = 3, Quantity = 1, UnitsOfMeasurementId = 3 });
-                ProductionStorageList.Add(new Production() { Id = 4, Date = new DateTime(2020, 7, 4), ProductId = 1, Quantity = 32, UnitsOfMeasurementId = 1 });
-                ProductionStorageList.Add(new Production() { Id = 5, Date = new DateTime(2021, 4, 18), ProductId = 1, Quantity = 18.7, UnitsOfMeasurementId = 1 });
-                ProductionStorageList.Add(new Production() { Id = 6, Date = new DateTime(2021, 9, 2), ProductId = 1, Quantity = 86, UnitsOfMeasurementId = 1 });
-            }
-        }
-
         public void AddProduction(Production production)
         {
-            ProductionStorageList.Add(new Production()
+            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
             {
-                Id = ProductionStorageList.LastOrDefault().Id + 1,
-                Date = production.Date,
-                ProductId = production.ProductId,
-                Quantity = production.Quantity,
-                UnitsOfMeasurementId = production.UnitsOfMeasurementId
-            });
+                context.Add(new Production()
+                {
+                    Date = production.Date,
+                    ProductId = production.ProductId,
+                    Quantity = production.Quantity,
+                    UnitsOfMeasurementId = production.UnitsOfMeasurementId
+                });
+                context.SaveChanges();
+            }
         }
 
         public Production GetProductionById(int id)
         {
-            return ProductionStorageList.FirstOrDefault(p => p.Id == id);
+            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
+            {
+                return context.Production.SingleOrDefault(p => p.Id == id);
+            }
         }
-
         public void DeleteProductionById(int id)
         {
-            var product = GetProductionById(id);
-            ProductionStorageList.Remove(product);
+            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
+            {
+                var product = GetProductionById(id);
+                context.Production.Remove(product);
+
+                context.SaveChanges();
+            }
         }
 
         public List<Production> GetProductionList()
         {
-            return ProductionStorageList;
+            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
+            {
+                return context.Production.ToList();
+            }
         }
     }
 }

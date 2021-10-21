@@ -5,37 +5,43 @@ namespace BM_ConsoleUI
 {
     public class UnitsOfMeasurementStorage : IUnitsOfMeasurementStorage
     {
-        private List<UnitsOfMeasurement> UnitsStorageList { get; set; }
-
-        public UnitsOfMeasurementStorage()
-        {
-            UnitsStorageList = new List<UnitsOfMeasurement>();
-            UnitsStorageList.Add(new UnitsOfMeasurement() { Id = 1, Unit = "Litrs" });
-            UnitsStorageList.Add(new UnitsOfMeasurement() { Id = 2, Unit = "Gabals" });
-            UnitsStorageList.Add(new UnitsOfMeasurement() { Id = 3, Unit = "Kilograms" });
-            UnitsStorageList.Add(new UnitsOfMeasurement() { Id = 4, Unit = "Grams" });
-            UnitsStorageList.Add(new UnitsOfMeasurement() { Id = 5, Unit = "Iepakojums" });
-        }
-
         public UnitsOfMeasurement GetUnitById(int id)
         {
-            return UnitsStorageList.FirstOrDefault(p => p.Id == id);
+            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
+            {
+                return context.UnitsOfMeasurements.SingleOrDefault(p => p.Id == id);
+            }
         }
 
-        public void DeleteProductById(int id)
+        public void DeleteUnitById(int id)
         {
-            var product = GetUnitById(id);
-            UnitsStorageList.Remove(product);
+            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
+            {
+                var product = GetUnitById(id);
+                context.UnitsOfMeasurements.Remove(product);
+
+                context.SaveChanges();
+            }
         }
 
         public void AddUnit(string unitName)
         {
-            UnitsStorageList.Add(new UnitsOfMeasurement() { Id = UnitsStorageList.LastOrDefault().Id + 1, Unit = unitName });
+            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
+            {
+                context.Add(new UnitsOfMeasurement()
+                {
+                    Unit = unitName
+                });
+                context.SaveChanges();
+            }
         }
 
         public List<UnitsOfMeasurement> GetUnitsList()
         {
-            return UnitsStorageList;
+            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
+            {
+                return context.UnitsOfMeasurements.ToList();
+            }
         }
     }
 }

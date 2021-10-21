@@ -20,7 +20,6 @@ namespace BM_ConsoleUI.Views
             _productionServices = productionServices;
             _unitsOfMeasurementServices = unitsOfMeasurementServices;
             _productionStorage = productionStorage;
-            ProductionSummary = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList());
         }
 
         /// <summary>
@@ -32,19 +31,22 @@ namespace BM_ConsoleUI.Views
         }
         public void FilterProduction(int byYear)
         {
-            var result = ProductionSummary.Where(w => w.Year == byYear).ToList();
+            var prodSummary = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList());
+            var result = prodSummary.Where(w => w.Year == byYear).ToList();
 
             RenderSummaryInConsole(result);
         }
         public void FilterProduction(string byProduct)
         {
-            var result = ProductionSummary.Where(w => w.ProductId == _productServices.GetProductIdByName(byProduct)).ToList();
+            var prodSummary = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList());
+            var result = prodSummary.Where(w => w.ProductId == _productServices.GetProductIdByName(byProduct)).ToList();
 
             RenderSummaryInConsole(result);
         }
         public void FilterProduction(int byYear, string byProduct)
         {
-            var result = ProductionSummary.Where(w => w.Year == byYear)
+            var prodSummary = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList());
+            var result = prodSummary.Where(w => w.Year == byYear)
                                         .Where(w => w.ProductId == _productServices.GetProductIdByName(byProduct))
                                         .ToList();
 

@@ -5,7 +5,7 @@ namespace BM_ConsoleUI
     public interface IUnitsOfMeasurementStorage
     {
         void AddUnit(string unitName);
-        void DeleteProductById(int id);
+        void DeleteUnitById(int id);
         UnitsOfMeasurement GetUnitById(int id);
         List<UnitsOfMeasurement> GetUnitsList();
     }
