@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BM_ConsoleUI\BM_ConsoleUI.csproj" />
+  </ItemGroup>
+
 </Project>
