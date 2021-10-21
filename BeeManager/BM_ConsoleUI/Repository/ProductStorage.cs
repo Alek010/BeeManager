@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BM_ConsoleUI
 {
-    public class ProductStorage
+    public class ProductStorage : IProductStorage
     {
-
         private List<Product> ProductStorageList { get; set; }
 
         public ProductStorage()
