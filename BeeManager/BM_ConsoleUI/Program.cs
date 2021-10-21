@@ -10,6 +10,7 @@ namespace BM_ConsoleUI
     {
         static void Main(string[] args)
         {
+            DataGenerator.Initialize();
             Console.OutputEncoding = Encoding.UTF8;
 
             var container = ContainerConfig.Configure();

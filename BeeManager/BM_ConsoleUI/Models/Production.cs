@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,9 @@ namespace BM_ConsoleUI
         public double Quantity { get; set; }
         public int UnitsOfMeasurementId { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
-        public virtual ICollection<UnitsOfMeasurement> Units { get; set; }
+        [ForeignKey("ProductId")]
+        public virtual Product Products { get; set; }
+        [ForeignKey("UnitsOfMeasurementId")]
+        public virtual UnitsOfMeasurement Units { get; set; }
     }
 }
