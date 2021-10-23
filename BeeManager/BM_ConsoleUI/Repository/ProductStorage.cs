@@ -5,43 +5,42 @@ namespace BM_ConsoleUI
 {
     public class ProductStorage : IProductStorage
     {
+        private BeeManagerContext _beeManagerContext;
+        public ProductStorage()
+        {
+            _beeManagerContext = new BeeManagerContext(BeeManagerContext.GetDbContextOptions());
+        }
+
+        public ProductStorage(BeeManagerContext beeManagerContext)
+        {
+            _beeManagerContext = beeManagerContext;
+        }
+
         public Product GetProductById(int id)
         {
-            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
-            {
-                return context.Products.SingleOrDefault(p => p.Id == id);
-            }
+            return _beeManagerContext.Products.SingleOrDefault(p => p.Id == id);
         }
 
         public void DeleteProductById(int id)
         {
-            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
-            {
-                var product = GetProductById(id);
-                context.Products.Remove(product);
+            var product = GetProductById(id);
+            _beeManagerContext.Products.Remove(product);
 
-                context.SaveChanges();
-            }
+            _beeManagerContext.SaveChanges();
         }
 
         public void AddProduct(string productName)
         {
-            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
+            _beeManagerContext.Add(new Product()
             {
-                context.Add(new Product()
-                {
-                    Name = productName
-                });
-                context.SaveChanges();
-            }
+                Name = productName
+            });
+            _beeManagerContext.SaveChanges();
         }
 
         public List<Product> GetProductsList()
         {
-            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
-            {
-                return context.Products.ToList();
-            }
+            return _beeManagerContext.Products.ToList();
         }
     }
 }

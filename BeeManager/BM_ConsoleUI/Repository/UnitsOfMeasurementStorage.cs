@@ -5,43 +5,42 @@ namespace BM_ConsoleUI
 {
     public class UnitsOfMeasurementStorage : IUnitsOfMeasurementStorage
     {
+        private BeeManagerContext _beeManagerContext;
+        public UnitsOfMeasurementStorage()
+        {
+            _beeManagerContext = new BeeManagerContext(BeeManagerContext.GetDbContextOptions());
+        }
+
+        public UnitsOfMeasurementStorage(BeeManagerContext beeManagerContext)
+        {
+            _beeManagerContext = beeManagerContext;
+        }
+
         public UnitsOfMeasurement GetUnitById(int id)
         {
-            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
-            {
-                return context.UnitsOfMeasurements.SingleOrDefault(p => p.Id == id);
-            }
+            return _beeManagerContext.UnitsOfMeasurements.SingleOrDefault(p => p.Id == id);
         }
 
         public void DeleteUnitById(int id)
         {
-            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
-            {
-                var product = GetUnitById(id);
-                context.UnitsOfMeasurements.Remove(product);
+            var product = GetUnitById(id);
+            _beeManagerContext.UnitsOfMeasurements.Remove(product);
 
-                context.SaveChanges();
-            }
+            _beeManagerContext.SaveChanges();
         }
 
         public void AddUnit(string unitName)
         {
-            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
+            _beeManagerContext.Add(new UnitsOfMeasurement()
             {
-                context.Add(new UnitsOfMeasurement()
-                {
-                    Unit = unitName
-                });
-                context.SaveChanges();
-            }
+                Unit = unitName
+            });
+            _beeManagerContext.SaveChanges();
         }
 
         public List<UnitsOfMeasurement> GetUnitsList()
         {
-            using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
-            {
-                return context.UnitsOfMeasurements.ToList();
-            }
+            return _beeManagerContext.UnitsOfMeasurements.ToList();
         }
     }
 }
