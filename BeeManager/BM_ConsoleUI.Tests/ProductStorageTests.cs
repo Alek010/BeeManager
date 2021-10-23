@@ -8,10 +8,7 @@ namespace BM_ConsoleUI.Tests
         BeeManagerTestContext fixture;
         public ProductStorageTests(BeeManagerTestContext fixture)
         {
-            if (this.fixture == null)
-            {
-                this.fixture = fixture;
-            }
+            this.fixture = fixture;
         }
 
         [Fact]

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Xunit;
 
 namespace BM_ConsoleUI.Tests
@@ -12,10 +8,7 @@ namespace BM_ConsoleUI.Tests
         BeeManagerTestContext fixture;
         public UnitsOfMeasurementStorageTests(BeeManagerTestContext fixture)
         {
-            if (this.fixture == null)
-            {
-                this.fixture = fixture;
-            }
+            this.fixture = fixture;
         }
 
         [Fact]
