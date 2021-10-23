@@ -9,8 +9,9 @@ namespace BM_ConsoleUI.Tests
 
         public BeeManagerTestContext()
         {
+            var myDatabaseName = "mydatabase_" + DateTime.Now.ToFileTimeUtc();
             var options = new DbContextOptionsBuilder<BeeManagerContext>()
-                .UseInMemoryDatabase("BeeManagerTestDatabase")
+                .UseInMemoryDatabase(myDatabaseName)
                 .Options;
 
             BeeManagerTestDb = new BeeManagerContext(options);
