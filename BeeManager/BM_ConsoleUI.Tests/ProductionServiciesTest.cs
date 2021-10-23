@@ -15,7 +15,7 @@ namespace BM_ConsoleUI.Tests
 
         [Theory]
         [ClassData(typeof(TestDataGenerator))]
-        public void ReturnSummaryList(List<Production> productions)
+        public void ReturnSummaryList_WhenMethodCalled_ThenCorrectSummuryReturned(List<Production> productions)
         {
             //Arrange
 
