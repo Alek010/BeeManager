@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Xunit;
 
 namespace BM_ConsoleUI.Tests
@@ -42,7 +38,7 @@ namespace BM_ConsoleUI.Tests
 
             string newName = mockProductStorage.GetProductById(lastId).Name;
 
-            Assert.True(newName == newProduct);
+            Assert.True(newName == newProduct, $"{newProduct} wasn't last added Product.");
         }
     }
 }
