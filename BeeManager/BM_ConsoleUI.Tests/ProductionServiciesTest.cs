@@ -22,7 +22,6 @@ namespace BM_ConsoleUI.Tests
             var expected = ProductionSummary;
 
             //Act
-
             ProductionServices productionServices = new ProductionServices();
 
             var actual = productionServices.ReturnSummaryList(productions);
@@ -39,7 +38,7 @@ namespace BM_ConsoleUI.Tests
         }
 
 
-        public List<ProductionSummary> ProductionSummary = new List<ProductionSummary>()
+        public static List<ProductionSummary> ProductionSummary = new List<ProductionSummary>()
             {
                 new ProductionSummary(){Year = 2019, ProductId = 1, Quantity = 21.5, UnitOfMeasurementId = 1 },
                 new ProductionSummary(){Year = 2020, ProductId = 2, Quantity = 3, UnitOfMeasurementId = 2 },

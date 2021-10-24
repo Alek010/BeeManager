@@ -59,6 +59,10 @@ namespace BM_ConsoleUI
             Console.WriteLine("\nSaražotās produkcijas žūrnāls atlasīts pēc medus produkta.\n");
             _productionSummaryView.ApplyFilter("Šūnu medus");
             _productionSummaryView.RenderSummaryInConsole();
+
+            Console.WriteLine("\nSaražotās produkcijas žūrnāls atlasīts pēc medus produkta 2020.gadā.\n");
+            _productionSummaryView.ApplyFilter(2020, "Medus");
+            _productionSummaryView.RenderSummaryInConsole();
         }
     }
 }

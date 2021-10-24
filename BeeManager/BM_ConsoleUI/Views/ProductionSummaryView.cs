@@ -44,6 +44,7 @@ namespace BM_ConsoleUI.Views
         public void ApplyFilter(int byYear, string byProduct)
         {
             ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList())
+                                        .Where(w => w.Year == byYear)
                                         .Where(w => w.ProductId == _productServices.GetProductIdByName(byProduct))
                                         .ToList();
         }
