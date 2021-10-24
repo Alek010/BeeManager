@@ -19,10 +19,7 @@ namespace BM_ConsoleUI.Tests
         {
             //Arrange
 
-            List<ProductionSummary> expected = new List<ProductionSummary>()
-            {
-                new ProductionSummary(){Year = 2021, ProductId = 1, Quantity = 104.7, UnitOfMeasurementId = 1 }
-            };
+            var expected = ProductionSummary;
 
             //Act
 
@@ -42,10 +39,24 @@ namespace BM_ConsoleUI.Tests
         }
 
 
+        public List<ProductionSummary> ProductionSummary = new List<ProductionSummary>()
+            {
+                new ProductionSummary(){Year = 2019, ProductId = 1, Quantity = 21.5, UnitOfMeasurementId = 1 },
+                new ProductionSummary(){Year = 2020, ProductId = 2, Quantity = 3, UnitOfMeasurementId = 2 },
+                new ProductionSummary(){Year = 2020, ProductId = 3, Quantity = 1, UnitOfMeasurementId = 3 },
+                new ProductionSummary(){Year = 2020, ProductId = 1, Quantity = 32, UnitOfMeasurementId = 1 },
+                new ProductionSummary(){Year = 2021, ProductId = 1, Quantity = 104.7, UnitOfMeasurementId = 1 }
+            };
+
+
         public class TestDataGenerator : IEnumerable<object[]>
         {
             private readonly List<Production> _data = new List<Production>
             {
+                new Production() { Id = 1, Date = new DateTime(2019, 9, 30), ProductId = 1, Quantity = 21.5, UnitsOfMeasurementId = 1 },
+                new Production() { Id = 2, Date = new DateTime(2020, 10, 16), ProductId = 2, Quantity = 3, UnitsOfMeasurementId = 2 },
+                new Production() { Id = 3, Date = new DateTime(2020, 3, 20), ProductId = 3, Quantity = 1, UnitsOfMeasurementId = 3 },
+                new Production() { Id = 4, Date = new DateTime(2020, 7, 4), ProductId = 1, Quantity = 32, UnitsOfMeasurementId = 1 },
                 new Production() { Id = 5, Date = new DateTime(2021, 4, 18), ProductId = 1, Quantity = 18.7, UnitsOfMeasurementId = 1 },
                 new Production() { Id = 6, Date = new DateTime(2021, 9, 2), ProductId = 1, Quantity = 86, UnitsOfMeasurementId = 1 }
             };
