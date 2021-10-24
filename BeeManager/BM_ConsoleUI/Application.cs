@@ -47,15 +47,18 @@ namespace BM_ConsoleUI
 
             _productionStorage.AddProduction(newProd);
 
-            _productionView.RenderRecordsInConsole(_productionStorage.GetProductionList());
+            _productionSummaryView.ApplyFilter();
+            _productionSummaryView.RenderSummaryInConsole();
 
             int year = 2021;
             Console.WriteLine($"\nSaražotās produkcijas žūrnāls par {year}.\n");
 
-            _productionSummaryView.FilterProduction(year);
+            _productionSummaryView.ApplyFilter(year);
+            _productionSummaryView.RenderSummaryInConsole();
 
             Console.WriteLine("\nSaražotās produkcijas žūrnāls atlasīts pēc medus produkta.\n");
-            _productionSummaryView.FilterProduction("Medus");
+            _productionSummaryView.ApplyFilter("Šūnu medus");
+            _productionSummaryView.RenderSummaryInConsole();
         }
     }
 }

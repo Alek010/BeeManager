@@ -8,7 +8,7 @@ namespace BM_ConsoleUI.Views
 {
     public class ProductionSummaryView : IProductionSummaryView
     {
-        public List<ProductionSummary> ProductionSummary { get; set; }
+        public List<ProductionSummary> ProductionSummaryFiltered { get; set; }
         IProductServices _productServices;
         IProductionServices _productionServices;
         IUnitsOfMeasurementServices _unitsOfMeasurementServices;
@@ -25,37 +25,34 @@ namespace BM_ConsoleUI.Views
         /// <summary>
         /// If empty returns unfiltered records.
         /// </summary>
-        public void FilterProduction()
+        public void ApplyFilter()
         {
-            RenderSummaryInConsole(ProductionSummary);
+            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList());
         }
-        public void FilterProduction(int byYear)
+        public void ApplyFilter(int byYear)
         {
-            var prodSummary = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList());
-            var result = prodSummary.Where(w => w.Year == byYear).ToList();
-
-            RenderSummaryInConsole(result);
+            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList())
+                                        .Where(w => w.Year == byYear)
+                                        .ToList();
         }
-        public void FilterProduction(string byProduct)
+        public void ApplyFilter(string byProduct)
         {
-            var prodSummary = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList());
-            var result = prodSummary.Where(w => w.ProductId == _productServices.GetProductIdByName(byProduct)).ToList();
-
-            RenderSummaryInConsole(result);
-        }
-        public void FilterProduction(int byYear, string byProduct)
-        {
-            var prodSummary = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList());
-            var result = prodSummary.Where(w => w.Year == byYear)
+            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList())
                                         .Where(w => w.ProductId == _productServices.GetProductIdByName(byProduct))
                                         .ToList();
-
-            RenderSummaryInConsole(result);
+        }
+        public void ApplyFilter(int byYear, string byProduct)
+        {
+            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList())
+                                        .Where(w => w.ProductId == _productServices.GetProductIdByName(byProduct))
+                                        .ToList();
         }
 
-        private void RenderSummaryInConsole(List<ProductionSummary> summary)
+        public void RenderSummaryInConsole()
         {
             SetHeaderOfView();
+
+            var summary = ProductionSummaryFiltered;
 
             for (int i = 0; i < summary.Count; i++)
             {
