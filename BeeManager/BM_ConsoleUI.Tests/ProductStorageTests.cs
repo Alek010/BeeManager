@@ -40,5 +40,34 @@ namespace BM_ConsoleUI.Tests
 
             Assert.True(newName == newProduct, $"{newProduct} wasn't last added Product.");
         }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        public void GetProductById_WhenMethodCalled_ThenItShouldReturnCorrectProduct(int id)
+        {
+            var mockProductStorage = new ProductStorage(fixture.BeeManagerTestDb);
+
+            var newProd = mockProductStorage.GetProductById(id);
+
+            Assert.True(newProd.Id == id, $"Wrong Id");
+        }
+
+        [Fact]
+        public void DeleteUnitnById_WhenUnitDeleted_ThenItShouldBeRemovedFromStorage()
+        {
+            var mockProductStorage = new ProductStorage(fixture.BeeManagerTestDb);
+
+            int lengthBefore = mockProductStorage.GetProductsList().Count();
+
+            int lastId = mockProductStorage.GetProductsList().LastOrDefault().Id;
+
+            mockProductStorage.DeleteProductById(lastId);
+
+            int lengthAfter = mockProductStorage.GetProductsList().Count();
+
+            Assert.True(lengthBefore - 1 == lengthAfter);
+        }
     }
 }
