@@ -32,9 +32,10 @@ namespace BM_ConsoleUI
 
             Console.WriteLine("\nSaražotās produkcijas žūrnāls.\n");
 
-            _productionView.RenderRecordsInConsole(_productionStorage.GetProductionList());
+            _productionView.ApplyFilter();
+            _productionView.RenderRecordsInConsole();
 
-            Console.WriteLine("\nIevadiet jaunu ierakstu par saražoto produkciju.");
+            Console.WriteLine("\nIevadiet jaunu ierakstu par saražoto produkciju: Šūnu medus 45.52 kg 01.10.2021");
 
             var newProd = new Production()
             {
@@ -43,24 +44,32 @@ namespace BM_ConsoleUI
                 Quantity = 45.52,
                 UnitsOfMeasurementId = 2
             };
-            Console.WriteLine("Jaunajā sarakstā jābūt 7 ierakstiem (NESTRĀDĀ!!!)");
+            Console.WriteLine("Jaunajā sarakstā jābūt 7 ierakstiem!\n");
 
             _productionStorage.AddProduction(newProd);
 
+            _productionView.ApplyFilter();
+            _productionView.RenderRecordsInConsole();
+
+            Console.WriteLine("\nSaražotās produkcijas žūrnāls par 2021.gadu\n");
+            _productionView.ApplyFilter(2021);
+            _productionView.RenderRecordsInConsole();
+
+            Console.WriteLine("\nProdukcijas žurnāla atskaite\n");
             _productionSummaryView.ApplyFilter();
             _productionSummaryView.RenderSummaryInConsole();
 
             int year = 2021;
-            Console.WriteLine($"\nSaražotās produkcijas žūrnāls par {year}.\n");
+            Console.WriteLine($"\nSaražotās produkcijas atskaite par {year}.\n");
 
             _productionSummaryView.ApplyFilter(year);
             _productionSummaryView.RenderSummaryInConsole();
 
-            Console.WriteLine("\nSaražotās produkcijas žūrnāls atlasīts pēc medus produkta.\n");
+            Console.WriteLine("\nSaražotās produkcijas žurnāla atskaite atlasīta pēc medus produkta.\n");
             _productionSummaryView.ApplyFilter("Šūnu medus");
             _productionSummaryView.RenderSummaryInConsole();
 
-            Console.WriteLine("\nSaražotās produkcijas žūrnāls atlasīts pēc medus produkta 2020.gadā.\n");
+            Console.WriteLine("\nSaražotās produkcijas žurnāla atskaite atlasīts pēc medus produkta 2020.gadā.\n");
             _productionSummaryView.ApplyFilter(2020, "Medus");
             _productionSummaryView.RenderSummaryInConsole();
         }

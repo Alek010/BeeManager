@@ -1,6 +1,7 @@
 ﻿using BM_ConsoleUI.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BM_ConsoleUI.Views
 {
@@ -11,32 +12,52 @@ namespace BM_ConsoleUI.Views
         IProductionStorage _productionStorage;
         IUnitsOfMeasurementServices _unitsOfMeasurementServices;
 
-        public ProductionView(IProductServices productServices, IProductionStorage productionStorage, IUnitsOfMeasurementServices unitsOfMeasurementServices)
+
+        public ProductionView(IProductServices productServices, IProductionStorage productionStorage, IUnitsOfMeasurementServices unitsOfMeasurementServices, IProductionServices productionServices)
         {
             _productServices = productServices;
             _productionStorage = productionStorage;
             _unitsOfMeasurementServices = unitsOfMeasurementServices;
+
+            Records = new List<Production>();
         }
 
-        public void RenderRecordsInConsole(List<Production> list)
+        /// <summary>
+        /// If empty returns unfiltered records.
+        /// </summary>
+        public void ApplyFilter()
+        {
+            Records = _productionStorage.GetProductionList();
+        }
+
+        public void ApplyFilter(int Year)
+        {
+            Records = _productionStorage.GetProductionList()
+                      .Where(w => w.Date.Year == Year)
+                      .ToList();
+        }
+
+        public void RenderRecordsInConsole()
         {
             SetHeadersOfView();
 
-            for (int i = 0; i < list.Count; i++)
+            var records = Records;
+
+            for (int i = 0; i < records.Count; i++)
             {
-                if (list[i].ProductId == 2)
+                if (records[i].ProductId == 2)
                 {
-                    Console.WriteLine($" {list[i].Date.ToShortDateString()}\t" +
-                                      $" {_productServices.GetProductNameById(list[i].ProductId)}\t" +
-                                      $" {list[i].Quantity}\t" +
-                                      $" {_unitsOfMeasurementServices.GetUnitNameById(list[i].UnitsOfMeasurementId)}");
+                    Console.WriteLine($" {records[i].Date.ToShortDateString()}\t" +
+                                      $" {_productServices.GetProductNameById(records[i].ProductId)}\t" +
+                                      $" {records[i].Quantity}\t" +
+                                      $" {_unitsOfMeasurementServices.GetUnitNameById(records[i].UnitsOfMeasurementId)}");
                 }
                 else
                 {
-                    Console.WriteLine($" {list[i].Date.ToShortDateString()}\t" +
-                                      $"    {_productServices.GetProductNameById(list[i].ProductId)}\t" +
-                                      $" {list[i].Quantity}\t" +
-                                      $" {_unitsOfMeasurementServices.GetUnitNameById(list[i].UnitsOfMeasurementId)}");
+                    Console.WriteLine($" {records[i].Date.ToShortDateString()}\t" +
+                                      $"    {_productServices.GetProductNameById(records[i].ProductId)}\t" +
+                                      $" {records[i].Quantity}\t" +
+                                      $" {_unitsOfMeasurementServices.GetUnitNameById(records[i].UnitsOfMeasurementId)}");
                 }
             }
         }
