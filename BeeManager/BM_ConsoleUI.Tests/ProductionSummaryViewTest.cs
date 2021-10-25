@@ -13,10 +13,17 @@ namespace BM_ConsoleUI.Tests
 {
     public class ProductionSummaryViewTest: IClassFixture<BeeManagerTestContext>
     {
-        BeeManagerTestContext fixture;
+        ProductionSummaryView productionSummary; 
+
         public ProductionSummaryViewTest(BeeManagerTestContext fixture)
         {
-            this.fixture = fixture;
+            var productServices = new ProductServices(new ProductStorage(fixture.BeeManagerTestDb));
+            var productionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
+            var unitsOfMeasurementStorage = new UnitsOfMeasurementStorage(fixture.BeeManagerTestDb);
+            var unitsOfMeasurementServices = new UnitsOfMeasurementServices(unitsOfMeasurementStorage);
+            var ProductionServices = new ProductionServices(productionStorage, productServices, unitsOfMeasurementServices);
+
+            productionSummary = new ProductionSummaryView(productServices, ProductionServices, unitsOfMeasurementServices, productionStorage);           
         }
 
 
@@ -25,13 +32,6 @@ namespace BM_ConsoleUI.Tests
         {
             var expected = ProductionServiciesTest.ProductionSummary;
 
-            var productServices = new ProductServices(new ProductStorage(fixture.BeeManagerTestDb));
-            var productionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
-            var unitsOfMeasurementStorage = new UnitsOfMeasurementStorage(fixture.BeeManagerTestDb);
-            var unitsOfMeasurementServices = new UnitsOfMeasurementServices(unitsOfMeasurementStorage);
-            var mockProductionServices = new ProductionServices(productionStorage, productServices, unitsOfMeasurementServices);
-
-            ProductionSummaryView productionSummary = new ProductionSummaryView(productServices, mockProductionServices, unitsOfMeasurementServices, productionStorage);
             productionSummary.ApplyFilter();
 
             var actual = productionSummary.ProductionSummaryFiltered;
@@ -45,13 +45,6 @@ namespace BM_ConsoleUI.Tests
         {
             var expected = ExpectedProductionSummaryFilteredbyYear2021;
 
-            var productServices = new ProductServices(new ProductStorage(fixture.BeeManagerTestDb));
-            var productionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
-            var unitsOfMeasurementStorage = new UnitsOfMeasurementStorage(fixture.BeeManagerTestDb);
-            var unitsOfMeasurementServices = new UnitsOfMeasurementServices(unitsOfMeasurementStorage);
-            var mockProductionServices = new ProductionServices(productionStorage, productServices, unitsOfMeasurementServices);
-
-            ProductionSummaryView productionSummary = new ProductionSummaryView(productServices, mockProductionServices, unitsOfMeasurementServices, productionStorage);
             productionSummary.ApplyFilter(byYear);
 
             var actual = productionSummary.ProductionSummaryFiltered;
@@ -65,14 +58,6 @@ namespace BM_ConsoleUI.Tests
         {
             var expected = ExpectedProductionSummaryFilteredbyProductNameOfHoney;
 
-            var productServices = new ProductServices(new ProductStorage(fixture.BeeManagerTestDb));
-            var productionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
-            var unitsOfMeasurementStorage = new UnitsOfMeasurementStorage(fixture.BeeManagerTestDb);
-            var unitsOfMeasurementServices = new UnitsOfMeasurementServices(unitsOfMeasurementStorage);
-            var mockProductionServices = new ProductionServices(productionStorage, productServices, unitsOfMeasurementServices);
-
-
-            ProductionSummaryView productionSummary = new ProductionSummaryView(productServices, mockProductionServices, unitsOfMeasurementServices, productionStorage);
             productionSummary.ApplyFilter(ProductName);
 
             var actual = productionSummary.ProductionSummaryFiltered;
@@ -86,14 +71,6 @@ namespace BM_ConsoleUI.Tests
         {
             var expected = ExpectedProductionSummaryFilteredbyYear2020AndproductNameOfHoney;
 
-            var productServices = new ProductServices(new ProductStorage(fixture.BeeManagerTestDb));
-            var productionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
-            var unitsOfMeasurementStorage = new UnitsOfMeasurementStorage(fixture.BeeManagerTestDb);
-            var unitsOfMeasurementServices = new UnitsOfMeasurementServices(unitsOfMeasurementStorage);
-            var mockProductionServices = new ProductionServices(productionStorage, productServices, unitsOfMeasurementServices);
-
-
-            ProductionSummaryView productionSummary = new ProductionSummaryView(productServices, mockProductionServices, unitsOfMeasurementServices, productionStorage);
             productionSummary.ApplyFilter(Year, ProductName);
 
             var actual = productionSummary.ProductionSummaryFiltered;
