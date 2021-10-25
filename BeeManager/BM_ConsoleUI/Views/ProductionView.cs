@@ -7,7 +7,7 @@ namespace BM_ConsoleUI.Views
 {
     public class ProductionView : IProductionView
     {
-        private List<Production> Records { get; set; }
+        public List<Production> Records { get; set; }
         IProductServices _productServices;
         IProductionStorage _productionStorage;
         IUnitsOfMeasurementServices _unitsOfMeasurementServices;
