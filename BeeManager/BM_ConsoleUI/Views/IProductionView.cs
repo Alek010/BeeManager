@@ -4,6 +4,8 @@ namespace BM_ConsoleUI.Views
 {
     public interface IProductionView
     {
-        void RenderRecordsInConsole(List<Production> list);
+        void ApplyFilter();
+        void ApplyFilter(int Year);
+        void RenderRecordsInConsole();
     }
 }
