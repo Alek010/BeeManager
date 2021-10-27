@@ -19,7 +19,7 @@ namespace BeeManagerLibrary.Tests
         {
             var mockProductionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
 
-            int lengthBefore = mockProductionStorage.GetProductionList().Count();
+            int lengthBefore = mockProductionStorage.GetFullProductionList().Count();
 
             var newProduct = new Production() 
             { 
@@ -31,7 +31,7 @@ namespace BeeManagerLibrary.Tests
 
             mockProductionStorage.AddProduction(newProduct);
 
-            int lengthAfter = mockProductionStorage.GetProductionList().Count();
+            int lengthAfter = mockProductionStorage.GetFullProductionList().Count();
 
             Assert.True(lengthBefore + 1 == lengthAfter);
         }
@@ -51,7 +51,7 @@ namespace BeeManagerLibrary.Tests
 
             mockProductionStorage.AddProduction(newProduction);
 
-            int lastId = mockProductionStorage.GetProductionList().LastOrDefault().Id;
+            int lastId = mockProductionStorage.GetFullProductionList().LastOrDefault().Id;
 
             double newQuantity = mockProductionStorage.GetProductionById(lastId).Quantity;
 
@@ -76,13 +76,13 @@ namespace BeeManagerLibrary.Tests
         {
             var mockProductionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
 
-            int lengthBefore = mockProductionStorage.GetProductionList().Count();
+            int lengthBefore = mockProductionStorage.GetFullProductionList().Count();
 
-            int lastId = mockProductionStorage.GetProductionList().LastOrDefault().Id;
+            int lastId = mockProductionStorage.GetFullProductionList().LastOrDefault().Id;
 
             mockProductionStorage.DeleteProductionById(lastId);
 
-            int lengthAfter = mockProductionStorage.GetProductionList().Count();
+            int lengthAfter = mockProductionStorage.GetFullProductionList().Count();
 
             Assert.True(lengthBefore - 1 == lengthAfter);
         }

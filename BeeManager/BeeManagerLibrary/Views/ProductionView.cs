@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace BeeManagerLibrary.Views
 {
-    public class ProductionView : IProductionView
+    public class ProductionView /*: IProductionView*/
     {
         public List<Production> Records { get; set; }
         IProductServices _productServices;
@@ -24,49 +24,20 @@ namespace BeeManagerLibrary.Views
             Records = new List<Production>();
         }
 
-        /// <summary>
-        /// If empty returns unfiltered records.
-        /// </summary>
+
         public void ApplyFilter()
         {
-            Records = _productionStorage.GetProductionList();
+            throw new NotImplementedException();
         }
 
         public void ApplyFilter(int Year)
         {
-            Records = _productionStorage.GetProductionList()
-                      .Where(w => w.Date.Year == Year)
-                      .ToList();
+            throw new NotImplementedException();
         }
 
         public void RenderRecordsInConsole()
         {
-            SetHeadersOfView();
-
-            var records = Records;
-
-            for (int i = 0; i < records.Count; i++)
-            {
-                if (records[i].ProductId == 2)
-                {
-                    Console.WriteLine($" {records[i].Date.ToShortDateString()}\t" +
-                                      $" {_productServices.GetProductNameById(records[i].ProductId)}\t" +
-                                      $" {records[i].Quantity}\t" +
-                                      $" {_unitsOfMeasurementServices.GetUnitNameById(records[i].UnitsOfMeasurementId)}");
-                }
-                else
-                {
-                    Console.WriteLine($" {records[i].Date.ToShortDateString()}\t" +
-                                      $"    {_productServices.GetProductNameById(records[i].ProductId)}\t" +
-                                      $" {records[i].Quantity}\t" +
-                                      $" {_unitsOfMeasurementServices.GetUnitNameById(records[i].UnitsOfMeasurementId)}");
-                }
-            }
-        }
-
-        private void SetHeadersOfView()
-        {
-            Console.WriteLine($"    Datums\t   Produkts    Skaits\tMērvienība");
+            throw new NotImplementedException();
         }
     }
 }

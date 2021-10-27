@@ -28,23 +28,23 @@ namespace BeeManagerLibrary.Views
         /// </summary>
         public void ApplyFilter()
         {
-            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList());
+            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetFullProductionList());
         }
         public void ApplyFilter(int byYear)
         {
-            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList())
+            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetFullProductionList())
                                         .Where(w => w.Year == byYear)
                                         .ToList();
         }
         public void ApplyFilter(string byProduct)
         {
-            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList())
+            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetFullProductionList())
                                         .Where(w => w.ProductId == _productServices.GetProductIdByName(byProduct))
                                         .ToList();
         }
         public void ApplyFilter(int byYear, string byProduct)
         {
-            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList())
+            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetFullProductionList())
                                         .Where(w => w.Year == byYear)
                                         .Where(w => w.ProductId == _productServices.GetProductIdByName(byProduct))
                                         .ToList();

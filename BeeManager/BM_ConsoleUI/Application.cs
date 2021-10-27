@@ -2,6 +2,7 @@
 using BeeManagerLibrary.Repository;
 using BeeManagerLibrary.Services;
 using BeeManagerLibrary.Views;
+using BM_ConsoleUI.Views;
 using System;
 
 namespace BM_ConsoleUI
@@ -34,8 +35,7 @@ namespace BM_ConsoleUI
 
             Console.WriteLine("\nSaražotās produkcijas žūrnāls.\n");
 
-            _productionView.ApplyFilter();
-            _productionView.RenderRecordsInConsole();
+            _productionView.RenderRecordsInConsole(_productionStorage.GetFullProductionList());
 
             Console.WriteLine("\nIevadiet jaunu ierakstu par saražoto produkciju: Šūnu medus 45.52 kg 01.10.2021");
 
@@ -50,12 +50,12 @@ namespace BM_ConsoleUI
 
             _productionStorage.AddProduction(newProd);
 
-            _productionView.ApplyFilter();
-            _productionView.RenderRecordsInConsole();
+            _productionView.RenderRecordsInConsole(_productionStorage.GetFullProductionList());
+
 
             Console.WriteLine("\nSaražotās produkcijas žūrnāls par 2021.gadu\n");
-            _productionView.ApplyFilter(2021);
-            _productionView.RenderRecordsInConsole();
+
+            _productionView.RenderRecordsInConsole(_productionStorage.GetFilteredProductionList(2021));
 
             Console.WriteLine("\nProdukcijas žurnāla atskaite\n");
             _productionSummaryView.ApplyFilter();

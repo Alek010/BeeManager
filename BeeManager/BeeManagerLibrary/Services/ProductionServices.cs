@@ -25,7 +25,7 @@ namespace BeeManagerLibrary.Services
 
         public List<Production> GetProductionList()
         {
-            return _productionStorage.GetProductionList(); ;
+            return _productionStorage.GetFullProductionList(); ;
         }
 
         public List<ProductionSummary> ReturnSummaryList(List<Production> list)

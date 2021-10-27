@@ -8,6 +8,7 @@ namespace BeeManagerLibrary.Repository
         void AddProduction(Production production);
         void DeleteProductionById(int id);
         Production GetProductionById(int id);
-        List<Production> GetProductionList();
+        List<Production> GetFullProductionList();
+        List<Production> GetFilteredProductionList(int Year);
     }
 }
