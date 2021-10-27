@@ -18,17 +18,6 @@ namespace BeeManagerLibrary.Services
             return productList.FirstOrDefault(p => p.Id == id).Name;
         }
 
-        public void GetProducts()
-        {
-            var productList = _productStorage.GetProductsList();
-
-            foreach (var item in productList)
-            {
-                Console.WriteLine(productList.IndexOf(item));
-                Console.WriteLine(item.Name);
-            }
-        }
-
         public int GetProductIdByName(string name)
         {
             var productList = _productStorage.GetProductsList();

@@ -18,16 +18,5 @@ namespace BeeManagerLibrary.Services
 
             return unitsOfMeasurementList.FirstOrDefault(p => p.Id == id).Unit;
         }
-
-        public void GetUnits()
-        {
-            var unitsOfMeasurementList = _unitsOfMeasurementStorage.GetUnitsList();
-
-            foreach (var item in unitsOfMeasurementList)
-            {
-                Console.WriteLine(unitsOfMeasurementList.IndexOf(item));
-                Console.WriteLine(item.Unit);
-            }
-        }
     }
 }

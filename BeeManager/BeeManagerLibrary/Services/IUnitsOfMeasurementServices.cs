@@ -3,6 +3,5 @@
     public interface IUnitsOfMeasurementServices
     {
         string GetUnitNameById(int id);
-        void GetUnits();
     }
 }
