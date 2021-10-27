@@ -1,7 +1,8 @@
-﻿using System;
+﻿using BeeManagerLibrary.Repository;
+using System;
 using System.Linq;
 
-namespace BM_ConsoleUI.Services
+namespace BeeManagerLibrary.Services
 {
     public class UnitsOfMeasurementServices : IUnitsOfMeasurementServices
     {
@@ -10,6 +11,7 @@ namespace BM_ConsoleUI.Services
         {
             _unitsOfMeasurementStorage = unitsOfMeasurementStorage;
         }
+
         public string GetUnitNameById(int id)
         {
             var unitsOfMeasurementList = _unitsOfMeasurementStorage.GetUnitsList();

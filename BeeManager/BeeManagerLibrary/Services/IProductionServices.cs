@@ -1,7 +1,7 @@
-﻿using BM_ConsoleUI.Models;
+﻿using BeeManagerLibrary.Models;
 using System.Collections.Generic;
 
-namespace BM_ConsoleUI.Services
+namespace BeeManagerLibrary.Services
 {
     public interface IProductionServices
     {

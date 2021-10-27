@@ -1,9 +1,10 @@
-﻿using BM_ConsoleUI.Models;
+﻿using BeeManagerLibrary.Models;
+using BeeManagerLibrary.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BM_ConsoleUI.Services
+namespace BeeManagerLibrary.Services
 {
     public class ProductionServices : IProductionServices
     {

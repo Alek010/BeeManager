@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BeeManagerLibrary.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace BM_ConsoleUI
+namespace BeeManagerLibrary
 {
     public class BeeManagerContext : DbContext
     {

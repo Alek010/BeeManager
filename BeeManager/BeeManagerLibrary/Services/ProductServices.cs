@@ -1,7 +1,8 @@
-﻿using System;
+﻿using BeeManagerLibrary.Repository;
+using System;
 using System.Linq;
 
-namespace BM_ConsoleUI.Services
+namespace BeeManagerLibrary.Services
 {
     public class ProductServices : IProductServices
     {

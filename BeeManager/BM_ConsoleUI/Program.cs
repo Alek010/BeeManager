@@ -1,6 +1,5 @@
 ﻿using Autofac;
-using BM_ConsoleUI.Services;
-using BM_ConsoleUI.Views;
+using BeeManagerLibrary;
 using System;
 using System.Text;
 

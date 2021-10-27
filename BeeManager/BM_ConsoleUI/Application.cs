@@ -1,5 +1,7 @@
-﻿using BM_ConsoleUI.Services;
-using BM_ConsoleUI.Views;
+﻿using BeeManagerLibrary.Models;
+using BeeManagerLibrary.Repository;
+using BeeManagerLibrary.Services;
+using BeeManagerLibrary.Views;
 using System;
 
 namespace BM_ConsoleUI

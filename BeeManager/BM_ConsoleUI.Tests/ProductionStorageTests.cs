@@ -1,8 +1,10 @@
-﻿using System;
+﻿using BeeManagerLibrary.Models;
+using BeeManagerLibrary.Repository;
+using System;
 using System.Linq;
 using Xunit;
 
-namespace BM_ConsoleUI.Tests
+namespace BeeManagerLibrary.Tests
 {
     public class ProductionStorageTests : IClassFixture<BeeManagerTestContext>
     {

@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using BeeManagerLibrary.Models;
+using System.Collections.Generic;
 
-namespace BM_ConsoleUI
+namespace BeeManagerLibrary.Repository
 {
     public interface IProductionStorage
     {

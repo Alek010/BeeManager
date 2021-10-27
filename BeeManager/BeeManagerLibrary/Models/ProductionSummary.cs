@@ -1,4 +1,4 @@
-﻿namespace BM_ConsoleUI.Models
+﻿namespace BeeManagerLibrary.Models
 {
     public class ProductionSummary
     {

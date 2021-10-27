@@ -1,11 +1,7 @@
 ﻿using Autofac;
-using BM_ConsoleUI.Services;
-using BM_ConsoleUI.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BeeManagerLibrary.Repository;
+using BeeManagerLibrary.Services;
+using BeeManagerLibrary.Views;
 
 namespace BM_ConsoleUI
 {
