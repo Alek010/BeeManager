@@ -51,8 +51,80 @@ namespace BeeManagerLibrary.Repository
         /// </summary>
         public List<Production> GetFilteredProductionList(int Year)
         {
+            return _beeManagerContext.Production.Where(w => w.Date.Year == Year)
+                                                .ToList();
+        }
+
+
+        public List<ProductionSummary> GetFullProductionSummary()
+        {
+
             return _beeManagerContext.Production.ToList()
-                                                .Where(w => w.Date.Year == Year)
+                                                .GroupBy(x => (x.Date.Year,
+                                                               x.ProductId,
+                                                               x.UnitsOfMeasurementId))
+                                                .Select(x => new ProductionSummary()
+                                                {
+                                                    Year = x.Key.Year,
+                                                    ProductId = x.Key.ProductId,
+                                                    Quantity = x.Sum(x => x.Quantity),
+                                                    UnitOfMeasurementId = x.Key.UnitsOfMeasurementId
+                                                })
+                                                .ToList();
+        }
+
+        public List<ProductionSummary> GetFilteredProductionSummary(int year)
+        {
+
+            return _beeManagerContext.Production.Where(w => w.Date.Year == year)
+                                                .ToList()
+                                                .GroupBy(x => (x.Date.Year,
+                                                               x.ProductId,
+                                                               x.UnitsOfMeasurementId))
+                                                .Select(x => new ProductionSummary()
+                                                {
+                                                    Year = x.Key.Year,
+                                                    ProductId = x.Key.ProductId,
+                                                    Quantity = x.Sum(x => x.Quantity),
+                                                    UnitOfMeasurementId = x.Key.UnitsOfMeasurementId
+                                                })
+                                                .ToList();
+        }
+
+        public List<ProductionSummary> GetFilteredProductionSummary(string productName)
+        {
+
+            return _beeManagerContext.Production.ToList()
+                                                .Where(w => w.ProductId == _beeManagerContext.Products.ToList().Find(p => p.Name == productName).Id)
+                                                .GroupBy(x => (x.Date.Year,
+                                                               x.ProductId,
+                                                               x.UnitsOfMeasurementId))
+                                                .Select(x => new ProductionSummary()
+                                                {
+                                                    Year = x.Key.Year,
+                                                    ProductId = x.Key.ProductId,
+                                                    Quantity = x.Sum(x => x.Quantity),
+                                                    UnitOfMeasurementId = x.Key.UnitsOfMeasurementId
+                                                })
+                                                .ToList();
+        }
+
+        public List<ProductionSummary> GetFilteredProductionSummary(int year, string productName)
+        {
+
+            return _beeManagerContext.Production.Where(w => w.Date.Year == year)
+                                                .ToList()
+                                                .Where(w => w.ProductId == _beeManagerContext.Products.ToList().Find(p => p.Name == productName).Id)
+                                                .GroupBy(x => (x.Date.Year,
+                                                               x.ProductId,
+                                                               x.UnitsOfMeasurementId))
+                                                .Select(x => new ProductionSummary()
+                                                {
+                                                    Year = x.Key.Year,
+                                                    ProductId = x.Key.ProductId,
+                                                    Quantity = x.Sum(x => x.Quantity),
+                                                    UnitOfMeasurementId = x.Key.UnitsOfMeasurementId
+                                                })
                                                 .ToList();
         }
 

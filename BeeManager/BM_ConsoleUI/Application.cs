@@ -1,7 +1,6 @@
 ﻿using BeeManagerLibrary.Models;
 using BeeManagerLibrary.Repository;
 using BeeManagerLibrary.Services;
-using BeeManagerLibrary.Views;
 using BM_ConsoleUI.Views;
 using System;
 
@@ -58,22 +57,22 @@ namespace BM_ConsoleUI
             _productionView.RenderRecordsInConsole(_productionStorage.GetFilteredProductionList(2021));
 
             Console.WriteLine("\nProdukcijas žurnāla atskaite\n");
-            _productionSummaryView.ApplyFilter();
-            _productionSummaryView.RenderSummaryInConsole();
+
+            _productionSummaryView.RenderSummaryInConsole(_productionStorage.GetFullProductionSummary());
 
             int year = 2021;
             Console.WriteLine($"\nSaražotās produkcijas atskaite par {year}.\n");
 
-            _productionSummaryView.ApplyFilter(year);
-            _productionSummaryView.RenderSummaryInConsole();
+
+            _productionSummaryView.RenderSummaryInConsole(_productionStorage.GetFilteredProductionSummary(year));
 
             Console.WriteLine("\nSaražotās produkcijas žurnāla atskaite atlasīta pēc medus produkta.\n");
-            _productionSummaryView.ApplyFilter("Šūnu medus");
-            _productionSummaryView.RenderSummaryInConsole();
+
+            _productionSummaryView.RenderSummaryInConsole(_productionStorage.GetFilteredProductionSummary("Šūnu medus"));
 
             Console.WriteLine("\nSaražotās produkcijas žurnāla atskaite atlasīts pēc medus produkta 2020.gadā.\n");
-            _productionSummaryView.ApplyFilter(2020, "Medus");
-            _productionSummaryView.RenderSummaryInConsole();
+
+            _productionSummaryView.RenderSummaryInConsole(_productionStorage.GetFilteredProductionSummary(2020, "Medus"));
         }
     }
 }

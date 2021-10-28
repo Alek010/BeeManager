@@ -6,6 +6,6 @@ namespace BeeManagerLibrary.Services
     public interface IProductionServices
     {
         List<Production> GetProductionList();
-        List<ProductionSummary> ReturnSummaryList(List<Production> list);
+
     }
 }
