@@ -30,28 +30,17 @@ namespace BeeManagerLibrary.Services
 
         public List<ProductionSummary> ReturnSummaryList(List<Production> list)
         {
-            var summary = new List<ProductionSummary>();
-            var result = list.GroupBy(x => (x.Date.Year,
-                                                    x.ProductId,
-                                                    x.UnitsOfMeasurementId))
-                                        .Select(g => (g.Key.Year,
-                                                    g.Key.ProductId,
-                                                    Total: g.Sum(x => x.Quantity),
-                                                    g.Key.UnitsOfMeasurementId));
-
-            foreach (var item in result)
-            {
-                ProductionSummary productionSummary = new ProductionSummary();
-
-                productionSummary.Year = item.Year;
-                productionSummary.ProductId = item.ProductId;
-                productionSummary.Quantity = item.Total;
-                productionSummary.UnitOfMeasurementId = item.UnitsOfMeasurementId;
-
-                summary.Add(productionSummary);
-            }
-
-            return summary;
+            return list.GroupBy(x => (x.Date.Year,
+                                             x.ProductId,
+                                             x.UnitsOfMeasurementId))
+                        .Select(x => new ProductionSummary()
+                                        {
+                                            Year = x.Key.Year,
+                                            ProductId = x.Key.ProductId,
+                                            Quantity = x.Sum(x => x.Quantity),
+                                            UnitOfMeasurementId = x.Key.UnitsOfMeasurementId
+                                        })
+                        .ToList();
         }
     }
 }
