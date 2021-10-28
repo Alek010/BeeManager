@@ -1,4 +1,4 @@
-﻿namespace BM_ConsoleUI.Services
+﻿namespace BeeManagerLibrary.Services
 {
     public interface IProductServices
     {

@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BeeManagerLibrary.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace BM_ConsoleUI.Tests
+namespace BeeManagerLibrary.Tests
 {
     public class BeeManagerTestContext : IDisposable
     {

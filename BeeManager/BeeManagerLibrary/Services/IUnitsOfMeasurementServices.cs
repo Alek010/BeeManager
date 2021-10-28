@@ -1,8 +1,7 @@
-﻿namespace BM_ConsoleUI.Services
+﻿namespace BeeManagerLibrary.Services
 {
     public interface IUnitsOfMeasurementServices
     {
         string GetUnitNameById(int id);
-        void GetUnits();
     }
 }

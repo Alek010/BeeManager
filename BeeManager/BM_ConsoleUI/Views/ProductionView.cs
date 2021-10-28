@@ -1,13 +1,15 @@
-﻿using BM_ConsoleUI.Services;
+﻿using BeeManagerLibrary.Models;
+using BeeManagerLibrary.Repository;
+using BeeManagerLibrary.Services;
+using BeeManagerLibrary.Views;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+
 
 namespace BM_ConsoleUI.Views
 {
-    public class ProductionView : IProductionView
+    public class ProductionView: IProductionView
     {
-        public List<Production> Records { get; set; }
         IProductServices _productServices;
         IProductionStorage _productionStorage;
         IUnitsOfMeasurementServices _unitsOfMeasurementServices;
@@ -19,29 +21,14 @@ namespace BM_ConsoleUI.Views
             _productionStorage = productionStorage;
             _unitsOfMeasurementServices = unitsOfMeasurementServices;
 
-            Records = new List<Production>();
         }
 
-        /// <summary>
-        /// If empty returns unfiltered records.
-        /// </summary>
-        public void ApplyFilter()
-        {
-            Records = _productionStorage.GetProductionList();
-        }
 
-        public void ApplyFilter(int Year)
-        {
-            Records = _productionStorage.GetProductionList()
-                      .Where(w => w.Date.Year == Year)
-                      .ToList();
-        }
-
-        public void RenderRecordsInConsole()
+        public void RenderRecordsInConsole(List<Production> productionList)
         {
             SetHeadersOfView();
 
-            var records = Records;
+            var records = productionList;
 
             for (int i = 0; i < records.Count; i++)
             {
@@ -66,5 +53,6 @@ namespace BM_ConsoleUI.Views
         {
             Console.WriteLine($"    Datums\t   Produkts    Skaits\tMērvienība");
         }
+
     }
 }

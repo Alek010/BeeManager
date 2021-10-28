@@ -1,6 +1,7 @@
-﻿using BM_ConsoleUI.Models;
-using BM_ConsoleUI.Services;
-using BM_ConsoleUI.Views;
+﻿using BeeManagerLibrary.Models;
+using BeeManagerLibrary.Repository;
+using BeeManagerLibrary.Services;
+using BeeManagerLibrary.Views;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace BM_ConsoleUI.Tests
+namespace BeeManagerLibrary.Tests
 {
     public class ProductionSummaryViewTest: IClassFixture<BeeManagerTestContext>
     {

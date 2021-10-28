@@ -1,10 +1,11 @@
-﻿using BM_ConsoleUI.Models;
-using BM_ConsoleUI.Services;
+﻿using BeeManagerLibrary.Models;
+using BeeManagerLibrary.Repository;
+using BeeManagerLibrary.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BM_ConsoleUI.Views
+namespace BeeManagerLibrary.Views
 {
     public class ProductionSummaryView : IProductionSummaryView
     {
@@ -27,23 +28,23 @@ namespace BM_ConsoleUI.Views
         /// </summary>
         public void ApplyFilter()
         {
-            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList());
+            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetFullProductionList());
         }
         public void ApplyFilter(int byYear)
         {
-            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList())
+            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetFullProductionList())
                                         .Where(w => w.Year == byYear)
                                         .ToList();
         }
         public void ApplyFilter(string byProduct)
         {
-            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList())
+            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetFullProductionList())
                                         .Where(w => w.ProductId == _productServices.GetProductIdByName(byProduct))
                                         .ToList();
         }
         public void ApplyFilter(int byYear, string byProduct)
         {
-            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetProductionList())
+            ProductionSummaryFiltered = _productionServices.ReturnSummaryList(_productionStorage.GetFullProductionList())
                                         .Where(w => w.Year == byYear)
                                         .Where(w => w.ProductId == _productServices.GetProductIdByName(byProduct))
                                         .ToList();

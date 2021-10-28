@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using BeeManagerLibrary.Models;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace BM_ConsoleUI
+namespace BeeManagerLibrary.Repository
 {
     public class ProductionStorage : IProductionStorage
     {
@@ -40,9 +41,20 @@ namespace BM_ConsoleUI
             _beeManagerContext.SaveChanges();
         }
 
-        public List<Production> GetProductionList()
+        public List<Production> GetFullProductionList()
         {
             return _beeManagerContext.Production.ToList();
         }
+
+        /// <summary>
+        /// Production List filtered by year.
+        /// </summary>
+        public List<Production> GetFilteredProductionList(int Year)
+        {
+            return _beeManagerContext.Production.ToList()
+                                                .Where(w => w.Date.Year == Year)
+                                                .ToList();
+        }
+
     }
 }

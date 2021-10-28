@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using BeeManagerLibrary.Models;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace BM_ConsoleUI
+namespace BeeManagerLibrary.Repository
 {
     public class UnitsOfMeasurementStorage : IUnitsOfMeasurementStorage
     {

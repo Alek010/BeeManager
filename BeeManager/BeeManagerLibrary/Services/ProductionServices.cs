@@ -1,9 +1,10 @@
-﻿using BM_ConsoleUI.Models;
+﻿using BeeManagerLibrary.Models;
+using BeeManagerLibrary.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BM_ConsoleUI.Services
+namespace BeeManagerLibrary.Services
 {
     public class ProductionServices : IProductionServices
     {
@@ -22,23 +23,9 @@ namespace BM_ConsoleUI.Services
             _unitsOfMeasurementServices = unitsOfMeasurementServices;
         }
 
-        public void GetProduction()
-        {
-            var productionList = _productionStorage.GetProductionList();
-
-            foreach (var item in productionList)
-            {
-                Console.WriteLine(item.Id);
-                Console.WriteLine(item.Date);
-                Console.WriteLine(_productServices.GetProductNameById(item.ProductId));
-                Console.WriteLine(item.Quantity);
-                Console.WriteLine(_unitsOfMeasurementServices.GetUnitNameById(item.ProductId));
-            }
-        }
-
         public List<Production> GetProductionList()
         {
-            return _productionStorage.GetProductionList(); ;
+            return _productionStorage.GetFullProductionList(); ;
         }
 
         public List<ProductionSummary> ReturnSummaryList(List<Production> list)
