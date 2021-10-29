@@ -10,11 +10,6 @@ namespace BeeManagerLibrary.Tests
 {
     public class ProductionStorageTests : IClassFixture<BeeManagerTestContext>
     {
-        //BeeManagerTestContext fixture;
-        public ProductionStorageTests(/*BeeManagerTestContext fixture*/)
-        {
-            //this.fixture = fixture;
-        }
 
         [Fact]
         public void AddProduction_WhenNewProductionAdded_ThenItShouldBeAddedToStorage()
@@ -114,7 +109,7 @@ namespace BeeManagerLibrary.Tests
 
                 var actual = mockProductionStorage.GetFullProductionList();
 
-                AssertEqualityOfProductionSummuryLists(expected, actual);
+                AssertEqualityOfProductionLists(expected, actual);
             }
         }
 
@@ -129,11 +124,74 @@ namespace BeeManagerLibrary.Tests
 
                 var actual = mockProductionStorage.GetFilteredProductionList(2021);
 
-                AssertEqualityOfProductionSummuryLists(expected, actual);
+                AssertEqualityOfProductionLists(expected, actual);
             }
         }
 
-        private void AssertEqualityOfProductionSummuryLists(List<Production> expected, List<Production> actual)
+        [Fact]
+        public void GetFullProductionSummary_ReturnUnfilteredSummary()
+        {
+            using (BeeManagerTestContext fixture = new BeeManagerTestContext())
+            {
+                var expected = ProductionSummary;
+
+                var mockProductionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
+
+                var actual = mockProductionStorage.GetFullProductionSummary();
+
+                AssertEqualityOfProductionSummaryLists(expected, actual);
+            }
+        }
+
+        [Theory]
+        [InlineData(2021)]
+        public void GetFilteredProductionSummary_WhenFileredByYear_ThenReturnFilteredSummary(int byYear)
+        {
+            using (BeeManagerTestContext fixture = new BeeManagerTestContext())
+            {
+                var expected = ExpectedProductionSummaryFilteredbyYear2021;
+
+                var mockProductionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
+
+                var actual = mockProductionStorage.GetFilteredProductionSummary(byYear);
+
+                AssertEqualityOfProductionSummaryLists(expected, actual);
+            }
+        }
+
+        [Theory]
+        [InlineData("Medus")]
+        public void GetFilteredProductionSummary_WhenFileredByProductName_ThenReturnFiltered(string ProductName)
+        {
+            using (BeeManagerTestContext fixture = new BeeManagerTestContext())
+            {
+                var expected = ExpectedProductionSummaryFilteredbyProductNameOfHoney;
+
+                var mockProductionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
+
+                var actual = mockProductionStorage.GetFilteredProductionSummary(ProductName);
+
+                AssertEqualityOfProductionSummaryLists(expected, actual);
+            }
+        }
+
+        [Theory]
+        [InlineData(2020, "Medus")]
+        public void GetFilteredProductionSummary_WhenFileredByYearAndProductName_ThenReturnFilteredSummary(int Year, string ProductName)
+        {
+            using (BeeManagerTestContext fixture = new BeeManagerTestContext())
+            {
+                var expected = ExpectedProductionSummaryFilteredbyYear2020AndproductNameOfHoney;
+
+                var mockProductionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
+
+                var actual = mockProductionStorage.GetFilteredProductionSummary(Year, ProductName);
+
+                AssertEqualityOfProductionSummaryLists(expected, actual);
+            }
+        }
+
+        private void AssertEqualityOfProductionLists(List<Production> expected, List<Production> actual)
         {
             for (int i = 0; i < expected.Count; i++)
             {
@@ -158,6 +216,43 @@ namespace BeeManagerLibrary.Tests
         {
             new Production() { Id = 5, Date = new DateTime(2021, 4, 18), ProductId = 1, Quantity = 18.7, UnitsOfMeasurementId = 1 },
             new Production() { Id = 6, Date = new DateTime(2021, 9, 2), ProductId = 1, Quantity = 86, UnitsOfMeasurementId = 1 }
+        };
+
+        private static List<ProductionSummary> ProductionSummary = new List<ProductionSummary>()
+        {
+            new ProductionSummary(){Year = 2019, ProductId = 1, Quantity = 21.5, UnitOfMeasurementId = 1 },
+            new ProductionSummary(){Year = 2020, ProductId = 2, Quantity = 3, UnitOfMeasurementId = 2 },
+            new ProductionSummary(){Year = 2020, ProductId = 3, Quantity = 1, UnitOfMeasurementId = 3 },
+            new ProductionSummary(){Year = 2020, ProductId = 1, Quantity = 32, UnitOfMeasurementId = 1 },
+            new ProductionSummary(){Year = 2021, ProductId = 1, Quantity = 104.7, UnitOfMeasurementId = 1 }
+        };
+
+        private void AssertEqualityOfProductionSummaryLists(List<ProductionSummary> expected, List<ProductionSummary> actual)
+        {
+            for (int i = 0; i < expected.Count; i++)
+            {
+                Assert.Equal(expected[i].Year, actual[i].Year);
+                Assert.Equal(expected[i].ProductId, actual[i].ProductId);
+                Assert.Equal(expected[i].Quantity, actual[i].Quantity);
+                Assert.Equal(expected[i].UnitOfMeasurementId, actual[i].UnitOfMeasurementId);
+            }
+        }
+
+        private List<ProductionSummary> ExpectedProductionSummaryFilteredbyYear2021 = new List<ProductionSummary>()
+        {
+                new ProductionSummary(){Year = 2021, ProductId = 1, Quantity = 104.7, UnitOfMeasurementId = 1 }
+        };
+
+        private List<ProductionSummary> ExpectedProductionSummaryFilteredbyProductNameOfHoney = new List<ProductionSummary>()
+        {
+                new ProductionSummary(){Year = 2019, ProductId = 1, Quantity = 21.5, UnitOfMeasurementId = 1 },
+                new ProductionSummary(){Year = 2020, ProductId = 1, Quantity = 32, UnitOfMeasurementId = 1 },
+                new ProductionSummary(){Year = 2021, ProductId = 1, Quantity = 104.7, UnitOfMeasurementId = 1 }
+        };
+
+        private List<ProductionSummary> ExpectedProductionSummaryFilteredbyYear2020AndproductNameOfHoney = new List<ProductionSummary>()
+        {
+                new ProductionSummary(){Year = 2020, ProductId = 1, Quantity = 32, UnitOfMeasurementId = 1 },
         };
     }
 }

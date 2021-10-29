@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using BeeManagerLibrary.Repository;
 using BeeManagerLibrary.Services;
-using BeeManagerLibrary.Views;
+using BM_ConsoleUI.Views;
 
 namespace BM_ConsoleUI
 {

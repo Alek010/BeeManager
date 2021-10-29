@@ -25,34 +25,9 @@ namespace BeeManagerLibrary.Services
 
         public List<Production> GetProductionList()
         {
-            return _productionStorage.GetFullProductionList(); ;
+            return _productionStorage.GetFullProductionList();
         }
 
-        public List<ProductionSummary> ReturnSummaryList(List<Production> list)
-        {
-            var summary = new List<ProductionSummary>();
-            var result = list.GroupBy(x => (x.Date.Year,
-                                                    x.ProductId,
-                                                    x.UnitsOfMeasurementId))
-                                        .Select(g => (g.Key.Year,
-                                                    g.Key.ProductId,
-                                                    Total: g.Sum(x => x.Quantity),
-                                                    g.Key.UnitsOfMeasurementId));
-
-            foreach (var item in result)
-            {
-                ProductionSummary productionSummary = new ProductionSummary();
-
-                productionSummary.Year = item.Year;
-                productionSummary.ProductId = item.ProductId;
-                productionSummary.Quantity = item.Total;
-                productionSummary.UnitOfMeasurementId = item.UnitsOfMeasurementId;
-
-                summary.Add(productionSummary);
-            }
-
-            return summary;
-        }
     }
 }
 
