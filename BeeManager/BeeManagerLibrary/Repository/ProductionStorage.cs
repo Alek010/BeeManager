@@ -93,9 +93,10 @@ namespace BeeManagerLibrary.Repository
 
         public List<ProductionSummary> GetFilteredProductionSummary(string productName)
         {
+            int productId = _beeManagerContext.Products.ToList().Find(p => p.Name == productName).Id;
 
-            return _beeManagerContext.Production.ToList()
-                                                .Where(w => w.ProductId == _beeManagerContext.Products.ToList().Find(p => p.Name == productName).Id)
+            return _beeManagerContext.Production.Where(w => w.ProductId == productId)
+                                                .ToList()
                                                 .GroupBy(x => (x.Date.Year,
                                                                x.ProductId,
                                                                x.UnitsOfMeasurementId))
@@ -111,10 +112,11 @@ namespace BeeManagerLibrary.Repository
 
         public List<ProductionSummary> GetFilteredProductionSummary(int year, string productName)
         {
+            int productId = _beeManagerContext.Products.ToList().Find(p => p.Name == productName).Id;
 
             return _beeManagerContext.Production.Where(w => w.Date.Year == year)
+                                                .Where(w => w.ProductId == productId)
                                                 .ToList()
-                                                .Where(w => w.ProductId == _beeManagerContext.Products.ToList().Find(p => p.Name == productName).Id)
                                                 .GroupBy(x => (x.Date.Year,
                                                                x.ProductId,
                                                                x.UnitsOfMeasurementId))
