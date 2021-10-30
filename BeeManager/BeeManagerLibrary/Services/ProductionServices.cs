@@ -12,10 +12,6 @@ namespace BeeManagerLibrary.Services
         IProductServices _productServices;
         IUnitsOfMeasurementServices _unitsOfMeasurementServices;
 
-        public ProductionServices()
-        {
-        }
-
         public ProductionServices(IProductionStorage productionStorage, IProductServices productServices, IUnitsOfMeasurementServices unitsOfMeasurementServices)
         {
             _productionStorage = productionStorage;
@@ -23,11 +19,35 @@ namespace BeeManagerLibrary.Services
             _unitsOfMeasurementServices = unitsOfMeasurementServices;
         }
 
-        public List<Production> GetProductionList()
+        public List<Production> GetAllProductionRecords()
         {
             return _productionStorage.GetFullProductionList();
         }
 
+        public List<Production> GetFilteredProductionRecords(int year)
+        {
+            return _productionStorage.GetFilteredProductionList(year);
+        }
+
+        public List<ProductionSummary> GetAllProductionSummaryRecords()
+        {
+            return _productionStorage.GetFullProductionSummary();
+        }
+
+        public List<ProductionSummary> GetFilteredProductionSummaryRecords(int year)
+        {
+            return _productionStorage.GetFilteredProductionSummary(year);
+        }
+
+        public List<ProductionSummary> GetFilteredProductionSummaryRecords(string productName)
+        {
+            return _productionStorage.GetFilteredProductionSummary(productName);
+        }
+
+        public List<ProductionSummary> GetFilteredProductionSummaryRecords(int year, string productName)
+        {
+            return _productionStorage.GetFilteredProductionSummary(year, productName);
+        }
     }
 }
 

@@ -5,7 +5,11 @@ namespace BeeManagerLibrary.Services
 {
     public interface IProductionServices
     {
-        List<Production> GetProductionList();
-
+        List<Production> GetFilteredProductionRecords(int year);
+        List<Production> GetAllProductionRecords();
+        List<ProductionSummary> GetAllProductionSummaryRecords();
+        List<ProductionSummary> GetFilteredProductionSummaryRecords(int year);
+        List<ProductionSummary> GetFilteredProductionSummaryRecords(string productName);
+        List<ProductionSummary> GetFilteredProductionSummaryRecords(int year, string productName);
     }
 }
