@@ -1,27 +1,21 @@
 ﻿using BeeManagerLibrary.Models;
-using BeeManagerLibrary.Repository;
 using BeeManagerLibrary.Services;
 using System;
 using System.Collections.Generic;
-
 
 namespace BM_ConsoleUI.Views
 {
     public class ProductionView: IProductionView
     {
         IProductServices _productServices;
-        IProductionStorage _productionStorage;
         IUnitsOfMeasurementServices _unitsOfMeasurementServices;
 
 
-        public ProductionView(IProductServices productServices, IProductionStorage productionStorage, IUnitsOfMeasurementServices unitsOfMeasurementServices, IProductionServices productionServices)
+        public ProductionView(IProductServices productServices, IUnitsOfMeasurementServices unitsOfMeasurementServices)
         {
             _productServices = productServices;
-            _productionStorage = productionStorage;
             _unitsOfMeasurementServices = unitsOfMeasurementServices;
-
         }
-
 
         public void RenderRecordsInConsole(List<Production> productionList)
         {
