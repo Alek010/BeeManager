@@ -12,7 +12,7 @@ namespace BM_ConsoleUI
             var builder = new ContainerBuilder();
 
             builder.RegisterType<Application>().As<IApplication>();
-            builder.RegisterType<Views.ProductionView>().As<Views.IProductionView>();
+            builder.RegisterType<ProductionView>().As<IProductionView>();
             builder.RegisterType<ProductionSummaryView>().As<IProductionSummaryView>();
 
             builder.RegisterType<ProductStorage>().As<IProductStorage>();

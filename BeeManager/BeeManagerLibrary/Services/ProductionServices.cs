@@ -9,25 +9,46 @@ namespace BeeManagerLibrary.Services
     public class ProductionServices : IProductionServices
     {
         IProductionStorage _productionStorage;
-        IProductServices _productServices;
-        IUnitsOfMeasurementServices _unitsOfMeasurementServices;
 
-        public ProductionServices()
-        {
-        }
-
-        public ProductionServices(IProductionStorage productionStorage, IProductServices productServices, IUnitsOfMeasurementServices unitsOfMeasurementServices)
+        public ProductionServices(IProductionStorage productionStorage)
         {
             _productionStorage = productionStorage;
-            _productServices = productServices;
-            _unitsOfMeasurementServices = unitsOfMeasurementServices;
         }
 
-        public List<Production> GetProductionList()
+        public List<Production> GetAllProductionRecords()
         {
             return _productionStorage.GetFullProductionList();
         }
 
+        public List<Production> GetFilteredProductionRecords(int year)
+        {
+            return _productionStorage.GetFilteredProductionList(year);
+        }
+
+        public List<ProductionSummary> GetAllProductionSummaryRecords()
+        {
+            return _productionStorage.GetFullProductionSummary();
+        }
+
+        public List<ProductionSummary> GetFilteredProductionSummaryRecords(int year)
+        {
+            return _productionStorage.GetFilteredProductionSummary(year);
+        }
+
+        public List<ProductionSummary> GetFilteredProductionSummaryRecords(string productName)
+        {
+            return _productionStorage.GetFilteredProductionSummary(productName);
+        }
+
+        public List<ProductionSummary> GetFilteredProductionSummaryRecords(int year, string productName)
+        {
+            return _productionStorage.GetFilteredProductionSummary(year, productName);
+        }
+
+        public void AddProduction(Production production)
+        {
+            _productionStorage.AddProduction(production);
+        }
     }
 }
 

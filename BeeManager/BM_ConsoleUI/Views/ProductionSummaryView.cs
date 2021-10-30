@@ -1,9 +1,7 @@
 ﻿using BeeManagerLibrary.Models;
-using BeeManagerLibrary.Repository;
 using BeeManagerLibrary.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace BM_ConsoleUI.Views
 {
@@ -11,19 +9,13 @@ namespace BM_ConsoleUI.Views
     {
         public List<ProductionSummary> ProductionSummaryFiltered { get; set; }
         IProductServices _productServices;
-        IProductionServices _productionServices;
         IUnitsOfMeasurementServices _unitsOfMeasurementServices;
-        IProductionStorage _productionStorage;
 
-        public ProductionSummaryView(IProductServices productServices, IProductionServices productionServices, IUnitsOfMeasurementServices unitsOfMeasurementServices, IProductionStorage productionStorage)
+        public ProductionSummaryView(IProductServices productServices, IUnitsOfMeasurementServices unitsOfMeasurementServices)
         {
             _productServices = productServices;
-            _productionServices = productionServices;
             _unitsOfMeasurementServices = unitsOfMeasurementServices;
-            _productionStorage = productionStorage;
         }
-
-
 
         public void RenderSummaryInConsole(List<ProductionSummary> productionSummaryList)
         {
