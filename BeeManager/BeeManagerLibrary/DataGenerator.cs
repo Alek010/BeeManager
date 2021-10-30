@@ -9,12 +9,16 @@ using System.Threading.Tasks;
 
 namespace BeeManagerLibrary
 {
-    public class DataGenerator
+    public static class DataGenerator
     {
         public static void Initialize()
         {
             using (var context = new BeeManagerContext(BeeManagerContext.GetDbContextOptions()))
             {
+                if (context.Production.Any())
+                {
+                    return;
+                }
 
                 context.Production.AddRange(
                     new Production() { Id = 1, Date = new DateTime(2019, 9, 30), ProductId = 1, Quantity = 21.5, UnitsOfMeasurementId = 1 },
@@ -24,11 +28,21 @@ namespace BeeManagerLibrary
                     new Production() { Id = 5, Date = new DateTime(2021, 4, 18), ProductId = 1, Quantity = 18.7, UnitsOfMeasurementId = 1 },
                     new Production() { Id = 6, Date = new DateTime(2021, 9, 2), ProductId = 1, Quantity = 86, UnitsOfMeasurementId = 1 });
 
+                if (context.Products.Any())
+                {
+                    return;
+                }
+
                 context.Products.AddRange(
                     new Product() { Id = 1, Name = "Medus" },
                     new Product() { Id = 2, Name = "Šūnu medus" },
                     new Product() { Id = 3, Name = "Vasks" },
                     new Product() { Id = 4, Name = "Ziedputekšņi" });
+
+                if (context.UnitsOfMeasurements.Any())
+                {
+                    return;
+                }
 
                 context.UnitsOfMeasurements.AddRange(
                     new UnitsOfMeasurement() { Id = 1, Unit = "Litrs" },

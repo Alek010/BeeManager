@@ -1,6 +1,11 @@
+using Autofac;
+using BeeManagerLibrary;
+using BeeManagerLibrary.Repository;
+using BeeManagerLibrary.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +29,16 @@ namespace BeeManagerMVC
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddScoped<IProductStorage, ProductStorage>();
+            services.AddScoped<IProductionStorage, ProductionStorage>();
+            services.AddScoped<IUnitsOfMeasurementStorage, UnitsOfMeasurementStorage>();
+
+            services.AddScoped<IProductServices, ProductServices>();
+            services.AddScoped<IProductionServices, ProductionServices>();
+            services.AddScoped<IUnitsOfMeasurementServices, UnitsOfMeasurementServices>();
+
+            services.AddDbContext<BeeManagerContext>(options => options.UseInMemoryDatabase(databaseName: "BeeManager"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

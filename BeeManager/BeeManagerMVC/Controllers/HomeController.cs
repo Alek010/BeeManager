@@ -1,4 +1,6 @@
-﻿using BeeManagerMVC.Models;
+﻿using BeeManagerLibrary.Repository;
+using BeeManagerLibrary.Services;
+using BeeManagerMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,16 +13,19 @@ namespace BeeManagerMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IProductionServices _productionServices;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IProductionStorage _productionStorage;
+        public HomeController(IProductionServices productionServices, IProductionStorage productionStorage)
         {
-            _logger = logger;
+            _productionServices = productionServices;
+            _productionStorage = productionStorage;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var productionList = _productionServices.GetAllProductionRecords();
+            return View("Index", productionList);
         }
 
         public IActionResult Privacy()

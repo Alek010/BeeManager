@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BM_ConsoleUI
 {
-    class Program
+    public static class Program
     {
         static void Main(string[] args)
         {
