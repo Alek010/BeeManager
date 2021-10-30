@@ -22,7 +22,7 @@ namespace BeeManagerLibrary.Tests
             var productionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
             var unitsOfMeasurementStorage = new UnitsOfMeasurementStorage(fixture.BeeManagerTestDb);
             var unitsOfMeasurementServices = new UnitsOfMeasurementServices(unitsOfMeasurementStorage);
-            var ProductionServices = new ProductionServices(productionStorage, productServices, unitsOfMeasurementServices);
+            var ProductionServices = new ProductionServices(productionStorage);
 
             productionSummary = new ProductionSummaryView(productServices, ProductionServices, unitsOfMeasurementServices, productionStorage);           
         }

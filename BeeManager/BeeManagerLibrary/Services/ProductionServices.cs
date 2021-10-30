@@ -9,14 +9,10 @@ namespace BeeManagerLibrary.Services
     public class ProductionServices : IProductionServices
     {
         IProductionStorage _productionStorage;
-        IProductServices _productServices;
-        IUnitsOfMeasurementServices _unitsOfMeasurementServices;
 
-        public ProductionServices(IProductionStorage productionStorage, IProductServices productServices, IUnitsOfMeasurementServices unitsOfMeasurementServices)
+        public ProductionServices(IProductionStorage productionStorage)
         {
             _productionStorage = productionStorage;
-            _productServices = productServices;
-            _unitsOfMeasurementServices = unitsOfMeasurementServices;
         }
 
         public List<Production> GetAllProductionRecords()

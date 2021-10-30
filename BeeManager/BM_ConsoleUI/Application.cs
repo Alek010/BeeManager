@@ -9,21 +9,13 @@ namespace BM_ConsoleUI
     public class Application : IApplication
     {
         IProductionServices _productionServices;
-        IProductServices _productServices;
-        IUnitsOfMeasurementServices _unitsOfMeasurementServices;
         IProductionStorage _productionStorage;
-        IProductStorage _productStorage;
-        IUnitsOfMeasurementStorage _unitsOfMeasurementStorage;
         IProductionView _productionView;
         IProductionSummaryView _productionSummaryView;
-        public Application(IProductionServices productionServices, IProductServices productServices, IUnitsOfMeasurementServices unitsOfMeasurementServices, IProductionStorage productionStorage, IProductStorage productStorage, IUnitsOfMeasurementStorage unitsOfMeasurementStorage, IProductionView productionView, IProductionSummaryView productionSummaryView)
+        public Application(IProductionServices productionServices, IProductionStorage productionStorage, IProductionView productionView, IProductionSummaryView productionSummaryView)
         {
             _productionServices = productionServices;
-            _productServices = productServices;
-            _unitsOfMeasurementServices = unitsOfMeasurementServices;
             _productionStorage = productionStorage;
-            _productStorage = productStorage;
-            _unitsOfMeasurementStorage = unitsOfMeasurementStorage;
             _productionView = productionView;
             _productionSummaryView = productionSummaryView;
         }
