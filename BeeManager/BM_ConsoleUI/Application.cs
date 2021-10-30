@@ -9,13 +9,11 @@ namespace BM_ConsoleUI
     public class Application : IApplication
     {
         IProductionServices _productionServices;
-        IProductionStorage _productionStorage;
         IProductionView _productionView;
         IProductionSummaryView _productionSummaryView;
-        public Application(IProductionServices productionServices, IProductionStorage productionStorage, IProductionView productionView, IProductionSummaryView productionSummaryView)
+        public Application(IProductionServices productionServices, IProductionView productionView, IProductionSummaryView productionSummaryView)
         {
             _productionServices = productionServices;
-            _productionStorage = productionStorage;
             _productionView = productionView;
             _productionSummaryView = productionSummaryView;
         }
@@ -39,7 +37,7 @@ namespace BM_ConsoleUI
             };
             Console.WriteLine("Jaunajā sarakstā jābūt 7 ierakstiem!\n");
 
-            _productionStorage.AddProduction(newProd);
+            _productionServices.AddProduction(newProd);
 
             _productionView.RenderRecordsInConsole(_productionServices.GetAllProductionRecords());
 

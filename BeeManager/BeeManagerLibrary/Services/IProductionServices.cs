@@ -11,5 +11,6 @@ namespace BeeManagerLibrary.Services
         List<ProductionSummary> GetFilteredProductionSummaryRecords(int year);
         List<ProductionSummary> GetFilteredProductionSummaryRecords(string productName);
         List<ProductionSummary> GetFilteredProductionSummaryRecords(int year, string productName);
+        void AddProduction(Production production);
     }
 }

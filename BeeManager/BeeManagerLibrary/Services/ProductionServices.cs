@@ -44,6 +44,11 @@ namespace BeeManagerLibrary.Services
         {
             return _productionStorage.GetFilteredProductionSummary(year, productName);
         }
+
+        public void AddProduction(Production production)
+        {
+            _productionStorage.AddProduction(production);
+        }
     }
 }
 
