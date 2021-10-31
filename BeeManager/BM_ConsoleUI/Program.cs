@@ -1,12 +1,11 @@
 ﻿using Autofac;
-using BM_ConsoleUI.Services;
-using BM_ConsoleUI.Views;
+using BeeManagerLibrary;
 using System;
 using System.Text;
 
 namespace BM_ConsoleUI
 {
-    class Program
+    public static class Program
     {
         static void Main(string[] args)
         {

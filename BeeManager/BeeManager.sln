@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BM_ConsoleUI", "BM_ConsoleUI\BM_ConsoleUI.csproj", "{F5CF12FE-959F-4C19-A12A-927EB9D8DD0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BM_ConsoleUI.Tests", "BM_ConsoleUI.Tests\BM_ConsoleUI.Tests.csproj", "{D17DBA00-D1FD-443B-A29D-7BF8B88E0BA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BM_ConsoleUI.Tests", "BM_ConsoleUI.Tests\BM_ConsoleUI.Tests.csproj", "{D17DBA00-D1FD-443B-A29D-7BF8B88E0BA4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeeManagerLibrary", "BeeManagerLibrary\BeeManagerLibrary.csproj", "{A5D05E15-C0DF-41AE-8CB3-D929357892BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeeManagerMVC", "BeeManagerMVC\BeeManagerMVC.csproj", "{447F78C6-C306-4464-B3CA-2F7D3DE1DFF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{D17DBA00-D1FD-443B-A29D-7BF8B88E0BA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D17DBA00-D1FD-443B-A29D-7BF8B88E0BA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D17DBA00-D1FD-443B-A29D-7BF8B88E0BA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5D05E15-C0DF-41AE-8CB3-D929357892BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5D05E15-C0DF-41AE-8CB3-D929357892BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5D05E15-C0DF-41AE-8CB3-D929357892BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5D05E15-C0DF-41AE-8CB3-D929357892BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{447F78C6-C306-4464-B3CA-2F7D3DE1DFF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{447F78C6-C306-4464-B3CA-2F7D3DE1DFF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{447F78C6-C306-4464-B3CA-2F7D3DE1DFF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{447F78C6-C306-4464-B3CA-2F7D3DE1DFF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
