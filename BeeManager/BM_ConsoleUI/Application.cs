@@ -11,58 +11,87 @@ namespace BM_ConsoleUI
         IProductionServices _productionServices;
         IProductionView _productionView;
         IProductionSummaryView _productionSummaryView;
-        public Application(IProductionServices productionServices, IProductionView productionView, IProductionSummaryView productionSummaryView)
+        IProductServices _productServices;
+        public Application(IProductionServices productionServices, IProductionView productionView, IProductionSummaryView productionSummaryView, IProductServices productServices)
         {
             _productionServices = productionServices;
             _productionView = productionView;
             _productionSummaryView = productionSummaryView;
+            _productServices = productServices;
         }
 
         public void Run()
         {
-            Console.WriteLine("Labdien!");
+           var list = _productServices.GetProductsList();
 
-            Console.WriteLine("\nSaražotās produkcijas žūrnāls.\n");
-
-            _productionView.RenderRecordsInConsole(_productionServices.GetAllProductionRecords());
-
-            Console.WriteLine("\nIevadiet jaunu ierakstu par saražoto produkciju: Šūnu medus 45.52 kg 01.10.2021");
-
-            var newProd = new Production()
+            foreach (var item in list)
             {
-                Date = new DateTime(2021, 10, 1),
-                ProductId = 2,
-                Quantity = 45.52,
-                UnitsOfMeasurementId = 2
-            };
-            Console.WriteLine("Jaunajā sarakstā jābūt 7 ierakstiem!\n");
+                Console.WriteLine($"Id: {item.Id}   Product Name: {item.Name}");
+            }
 
-            _productionServices.AddProduction(newProd);
+            int Id;
+            string newProductName;
 
-            _productionView.RenderRecordsInConsole(_productionServices.GetAllProductionRecords());
+            Console.WriteLine($"\nEdit product name by choosing it's ID and writing poduct name to update.\n");
+            Console.Write($"Type ID of product to be updated: ");
+            Id = int.Parse(Console.ReadLine());
+            Console.Write($"Type new product name to be updated: ");
+            newProductName = Console.ReadLine();
 
+            _productServices.UpdateProduct(Id, newProductName);
 
-            Console.WriteLine("\nSaražotās produkcijas žūrnāls par 2021.gadu\n");
+            Console.WriteLine("\nTable records of products after update.");
 
-            _productionView.RenderRecordsInConsole(_productionServices.GetFilteredProductionRecords(2021));
-
-            Console.WriteLine("\nProdukcijas žurnāla atskaite\n");
-
-            _productionSummaryView.RenderSummaryInConsole(_productionServices.GetAllProductionSummaryRecords());
-
-            int year = 2021;
-            Console.WriteLine($"\nSaražotās produkcijas atskaite par {year}.\n");
+            foreach (var item in list)
+            {
+                Console.WriteLine($"Id: {item.Id}   Product Name: {item.Name}");
+            }
 
 
-            _productionSummaryView.RenderSummaryInConsole(_productionServices.GetFilteredProductionSummaryRecords(year));
 
-            Console.WriteLine("\nSaražotās produkcijas žurnāla atskaite atlasīta pēc medus produkta.\n");
+            //    Console.WriteLine("Labdien!");
 
-            _productionSummaryView.RenderSummaryInConsole(_productionServices.GetFilteredProductionSummaryRecords("Šūnu medus"));
+            //    Console.WriteLine("\nSaražotās produkcijas žūrnāls.\n");
 
-            Console.WriteLine("\nSaražotās produkcijas žurnāla atskaite atlasīts pēc medus produkta 2020.gadā.\n");
+            //    _productionView.RenderRecordsInConsole(_productionServices.GetAllProductionRecords());
 
-            _productionSummaryView.RenderSummaryInConsole(_productionServices.GetFilteredProductionSummaryRecords(2020, "Medus"));
+            //    Console.WriteLine("\nIevadiet jaunu ierakstu par saražoto produkciju: Šūnu medus 45.52 kg 01.10.2021");
+
+            //    var newProd = new Production()
+            //    {
+            //        Date = new DateTime(2021, 10, 1),
+            //        ProductId = 2,
+            //        Quantity = 45.52,
+            //        UnitsOfMeasurementId = 2
+            //    };
+            //    Console.WriteLine("Jaunajā sarakstā jābūt 7 ierakstiem!\n");
+
+            //    _productionServices.AddProduction(newProd);
+
+            //    _productionView.RenderRecordsInConsole(_productionServices.GetAllProductionRecords());
+
+
+            //    Console.WriteLine("\nSaražotās produkcijas žūrnāls par 2021.gadu\n");
+
+            //    _productionView.RenderRecordsInConsole(_productionServices.GetFilteredProductionRecords(2021));
+
+            //    Console.WriteLine("\nProdukcijas žurnāla atskaite\n");
+
+            //    _productionSummaryView.RenderSummaryInConsole(_productionServices.GetAllProductionSummaryRecords());
+
+            //    int year = 2021;
+            //    Console.WriteLine($"\nSaražotās produkcijas atskaite par {year}.\n");
+
+
+            //    _productionSummaryView.RenderSummaryInConsole(_productionServices.GetFilteredProductionSummaryRecords(year));
+
+            //    Console.WriteLine("\nSaražotās produkcijas žurnāla atskaite atlasīta pēc medus produkta.\n");
+
+            //    _productionSummaryView.RenderSummaryInConsole(_productionServices.GetFilteredProductionSummaryRecords("Šūnu medus"));
+
+            //    Console.WriteLine("\nSaražotās produkcijas žurnāla atskaite atlasīts pēc medus produkta 2020.gadā.\n");
+
+            //    _productionSummaryView.RenderSummaryInConsole(_productionServices.GetFilteredProductionSummaryRecords(2020, "Medus"));
         }
     }
 }

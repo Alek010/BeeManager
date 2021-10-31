@@ -9,5 +9,6 @@ namespace BeeManagerLibrary.Repository
         void DeleteProductById(int id);
         Product GetProductById(int id);
         List<Product> GetProductsList();
+        void UpdateProduct(int id, string productName);
     }
 }
