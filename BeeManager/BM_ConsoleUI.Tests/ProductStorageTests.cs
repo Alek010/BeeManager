@@ -1,4 +1,5 @@
-﻿using BeeManagerLibrary.Repository;
+﻿using BeeManagerLibrary.Models;
+using BeeManagerLibrary.Repository;
 using System.Linq;
 using Xunit;
 
@@ -70,5 +71,21 @@ namespace BeeManagerLibrary.Tests
 
             Assert.True(lengthBefore - 1 == lengthAfter);
         }
+
+        [Fact]
+        public void UpdateProductById_WhenMethodCalled_ThenProductNameUpdated()
+        {
+            var expected = new Product() { Id = 1, Name = "UpdatedName" };
+
+            var mockProductStorage = new ProductStorage(fixture.BeeManagerTestDb);
+
+            mockProductStorage.UpdateProduct(1, "UpdatedName");
+
+            var actual = mockProductStorage.GetProductById(1);
+
+            Assert.Equal(expected.Name, actual.Name);
+        }
+
+
     }
 }

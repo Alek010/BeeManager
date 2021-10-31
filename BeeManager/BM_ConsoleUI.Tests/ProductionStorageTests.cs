@@ -191,6 +191,27 @@ namespace BeeManagerLibrary.Tests
             }
         }
 
+        [Fact]
+        public void UpdateProductById_WhenMethodCalled_ThenProductNameUpdated()
+        {
+            using (BeeManagerTestContext fixture = new BeeManagerTestContext())
+            {
+                var expected = new Production() { Id = 1, Date = new DateTime(2019, 9, 20), ProductId = 2, Quantity = 100.55, UnitsOfMeasurementId = 2 };
+
+                var mockProductionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
+
+                mockProductionStorage.UpdateProductionById(1, new DateTime(2019, 9, 20), 2, 100.55, 2);
+
+                var actual = mockProductionStorage.GetProductionById(1);
+
+                Assert.Equal(expected.Id, actual.Id);
+                Assert.Equal(expected.ProductId, actual.ProductId);
+                Assert.Equal(expected.Quantity, actual.Quantity);
+                Assert.Equal(expected.UnitsOfMeasurementId, actual.UnitsOfMeasurementId);
+            }
+
+        }
+
         private void AssertEqualityOfProductionLists(List<Production> expected, List<Production> actual)
         {
             for (int i = 0; i < expected.Count; i++)

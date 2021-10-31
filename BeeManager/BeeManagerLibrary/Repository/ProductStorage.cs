@@ -39,9 +39,24 @@ namespace BeeManagerLibrary.Repository
             _beeManagerContext.SaveChanges();
         }
 
+        public void UpdateProduct(int id, string productName)
+        {
+            var product = GetProductById(id);
+            product.Name = productName;
+
+            _beeManagerContext.Update(product);
+
+            _beeManagerContext.SaveChanges();
+        }
+
         public List<Product> GetProductsList()
         {
             return _beeManagerContext.Products.ToList();
+        }
+
+        public int GetProductIdByName(string name)
+        {
+            return _beeManagerContext.Products.ToList().Find(p => p.Name == name).Id;
         }
     }
 }

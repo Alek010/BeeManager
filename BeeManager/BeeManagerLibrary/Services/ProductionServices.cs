@@ -49,6 +49,16 @@ namespace BeeManagerLibrary.Services
         {
             _productionStorage.AddProduction(production);
         }
+
+        public void DeleteProductionById(int id)
+        {
+            _productionStorage.DeleteProductionById(id);
+        }
+
+        public void UpdateProductionById(int id, DateTime date, int productId, double quantity, int unitsOfMeasurementId)
+        {
+            _productionStorage.UpdateProductionById(id, date, productId, quantity, unitsOfMeasurementId);
+        }
     }
 }
 

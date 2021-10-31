@@ -1,5 +1,7 @@
-﻿using BeeManagerLibrary.Repository;
+﻿using BeeManagerLibrary.Models;
+using BeeManagerLibrary.Repository;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BeeManagerLibrary.Services
@@ -24,5 +26,26 @@ namespace BeeManagerLibrary.Services
 
             return productList.Find(p => p.Name == name).Id;
         }
+
+        public void UpdateProduct(int id, string name)
+        {
+            _productStorage.UpdateProduct(id, name);
+        }
+
+        public void AddProduct(string productName)
+        {
+            _productStorage.AddProduct(productName);
+        }
+
+        public void DeleteProductById(int id)
+        {
+            _productStorage.DeleteProductById(id);
+        }
+
+        public List<Product> GetProductsList()
+        {
+           return _productStorage.GetProductsList();
+        }
+
     }
 }

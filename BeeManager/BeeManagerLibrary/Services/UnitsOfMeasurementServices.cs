@@ -18,5 +18,22 @@ namespace BeeManagerLibrary.Services
 
             return unitsOfMeasurementList.FirstOrDefault(p => p.Id == id).Unit;
         }
+
+        public void UpdateUnit(int id, string unitName)
+        {
+            _unitsOfMeasurementStorage.UpdateUnit(id, unitName);
+        }
+
+        public void AddUnit(string unitName)
+        {
+            _unitsOfMeasurementStorage.AddUnit(unitName);
+        }
+
+        public void DeleteUnitById(int id)
+        {
+            _unitsOfMeasurementStorage.DeleteUnitById(id);
+        }
+
+
     }
 }
