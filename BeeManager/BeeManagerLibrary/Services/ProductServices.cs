@@ -32,6 +32,16 @@ namespace BeeManagerLibrary.Services
             _productStorage.UpdateProduct(id, name);
         }
 
+        public void AddProduct(string productName)
+        {
+            _productStorage.AddProduct(productName);
+        }
+
+        public void DeleteProductById(int id)
+        {
+            _productStorage.DeleteProductById(id);
+        }
+
         public List<Product> GetProductsList()
         {
            return _productStorage.GetProductsList();

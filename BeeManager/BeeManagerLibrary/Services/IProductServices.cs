@@ -5,6 +5,8 @@ namespace BeeManagerLibrary.Services
 {
     public interface IProductServices
     {
+        void AddProduct(string productName);
+        void DeleteProductById(int id);
         int GetProductIdByName(string name);
         string GetProductNameById(int id);
         List<Product> GetProductsList();
