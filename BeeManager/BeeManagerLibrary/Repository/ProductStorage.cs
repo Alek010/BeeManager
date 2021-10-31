@@ -53,5 +53,10 @@ namespace BeeManagerLibrary.Repository
         {
             return _beeManagerContext.Products.ToList();
         }
+
+        public int GetProductIdByName(string name)
+        {
+            return _beeManagerContext.Products.ToList().Find(p => p.Name == name).Id;
+        }
     }
 }
