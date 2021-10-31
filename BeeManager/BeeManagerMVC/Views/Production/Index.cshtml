@@ -1,0 +1,28 @@
+﻿@model IEnumerable<BeeManagerMVC.Models.ProductionModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Production</h1>
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>Id </th>
+                <th>Date</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Unit</th>
+            </tr>
+            @foreach (var d in Model)
+            {
+                <tr>
+                    <td>@d.Id</td>
+                    <td>@d.Date</td>
+                    <td>@d.Product</td>
+                    <td>@d.Quantity</td>
+                    <td>@d.Units</td>
+                </tr>
+            }
+        </table>
+</div>
