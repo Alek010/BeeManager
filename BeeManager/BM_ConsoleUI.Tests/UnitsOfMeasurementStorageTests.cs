@@ -1,4 +1,5 @@
-﻿using BeeManagerLibrary.Repository;
+﻿using BeeManagerLibrary.Models;
+using BeeManagerLibrary.Repository;
 using System.Linq;
 using Xunit;
 
@@ -69,6 +70,20 @@ namespace BeeManagerLibrary.Tests
             int lengthAfter = mockUnitsStorage.GetUnitsList().Count();
 
             Assert.True(lengthBefore - 1 == lengthAfter);
+        }
+
+        [Fact]
+        public void UpdateProductById_WhenMethodCalled_ThenProductNameUpdated()
+        {
+            var expected = new UnitsOfMeasurement() { Id = 1, Unit = "UpdatedUnit" };
+
+            var mockUnitStorage = new UnitsOfMeasurementStorage(fixture.BeeManagerTestDb);
+
+            mockUnitStorage.UpdateUnit(1, "UpdatedUnit");
+
+            var actual = mockUnitStorage.GetUnitById(1);
+
+            Assert.Equal(expected.Unit, actual.Unit);
         }
     }
 }
