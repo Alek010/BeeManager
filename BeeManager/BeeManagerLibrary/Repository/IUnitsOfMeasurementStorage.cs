@@ -9,5 +9,6 @@ namespace BeeManagerLibrary.Repository
         void DeleteUnitById(int id);
         UnitsOfMeasurement GetUnitById(int id);
         List<UnitsOfMeasurement> GetUnitsList();
+        void UpdateUnit(int id, string unitName);
     }
 }

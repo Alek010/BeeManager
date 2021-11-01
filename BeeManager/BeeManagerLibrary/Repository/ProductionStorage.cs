@@ -1,4 +1,5 @@
 ﻿using BeeManagerLibrary.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,6 +38,20 @@ namespace BeeManagerLibrary.Repository
         {
             var product = GetProductionById(id);
             _beeManagerContext.Production.Remove(product);
+
+            _beeManagerContext.SaveChanges();
+        }
+
+        public void UpdateProductionById(int id, DateTime date, int productId, double quantity, int unitsOfMeasurementId)
+        {
+            var production = GetProductionById(id);
+
+            production.Date = date;
+            production.ProductId = productId;
+            production.Quantity = quantity;
+            production.UnitsOfMeasurementId = unitsOfMeasurementId;
+
+            _beeManagerContext.Update(production);
 
             _beeManagerContext.SaveChanges();
         }

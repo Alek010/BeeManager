@@ -1,4 +1,5 @@
 ﻿using BeeManagerLibrary.Models;
+using System;
 using System.Collections.Generic;
 
 namespace BeeManagerLibrary.Repository
@@ -14,5 +15,6 @@ namespace BeeManagerLibrary.Repository
         List<ProductionSummary> GetFilteredProductionSummary(string productName);
         List<ProductionSummary> GetFilteredProductionSummary(int year);
         List<ProductionSummary> GetFullProductionSummary();
+        void UpdateProductionById(int id, DateTime date, int productId, double quantity, int unitsOfMeasurementId);
     }
 }

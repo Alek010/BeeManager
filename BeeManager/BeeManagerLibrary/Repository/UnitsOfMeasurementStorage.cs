@@ -24,8 +24,8 @@ namespace BeeManagerLibrary.Repository
 
         public void DeleteUnitById(int id)
         {
-            var product = GetUnitById(id);
-            _beeManagerContext.UnitsOfMeasurements.Remove(product);
+            var unit = GetUnitById(id);
+            _beeManagerContext.UnitsOfMeasurements.Remove(unit);
 
             _beeManagerContext.SaveChanges();
         }
@@ -36,6 +36,16 @@ namespace BeeManagerLibrary.Repository
             {
                 Unit = unitName
             });
+            _beeManagerContext.SaveChanges();
+        }
+
+        public void UpdateUnit(int id, string unitName)
+        {
+            var unit = GetUnitById(id);
+            unit.Unit = unitName;
+
+            _beeManagerContext.Update(unit);
+
             _beeManagerContext.SaveChanges();
         }
 
