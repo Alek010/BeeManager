@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BeeManagerLibrary.Models
 {
-    public class Production
+    public class Production:BaseEntity
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }

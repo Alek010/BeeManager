@@ -26,7 +26,7 @@ namespace BM_ConsoleUI
 
             foreach (var item in list)
             {
-                Console.WriteLine($"Id: {item.Id}   Product Name: {item.Name}");
+                Console.WriteLine($"Id: {item.Id}   Product Name: {item.Name}           CreatedDate: {item.CreatedDate}     UpdatedDate: {item.UpdatedDate}");
             }
 
             int Id;
@@ -44,7 +44,7 @@ namespace BM_ConsoleUI
 
             foreach (var item in list)
             {
-                Console.WriteLine($"Id: {item.Id}   Product Name: {item.Name}");
+                Console.WriteLine($"Id: {item.Id}   Product Name: {item.Name}           CreatedDate: {item.CreatedDate}     UpdatedDate: {item.UpdatedDate}");
             }
 
 
