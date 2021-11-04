@@ -14,18 +14,30 @@ namespace BeeManagerMVC.Controllers
     public class HomeController : Controller
     {
         private readonly IProductionServices _productionServices;
-
-        private readonly IProductionStorage _productionStorage;
-        public HomeController(IProductionServices productionServices, IProductionStorage productionStorage)
+        private readonly IProductServices _productServices;
+        private readonly IUnitsOfMeasurementServices _unitsOfMeasurementServices;
+        public HomeController(IProductionServices productionServices, IProductServices productServices, IUnitsOfMeasurementServices unitsOfMeasurementServices)
         {
             _productionServices = productionServices;
-            _productionStorage = productionStorage;
+            _productServices = productServices;
+            _unitsOfMeasurementServices = unitsOfMeasurementServices;
         }
-
         public IActionResult Index()
         {
-            var productionList = _productionServices.GetAllProductionRecords();
-            return View("Index", productionList);
+            var productionSummary = _productionServices.GetAllProductionSummaryRecords();
+
+            var list = new List<ProductionSummaryModel>();
+            foreach (var item in productionSummary)
+            {
+                list.Add(new ProductionSummaryModel
+                {
+                    Year = item.Year,
+                    ProductName = _productServices.GetProductNameById(item.ProductId),
+                    Quantity = item.Quantity,
+                    Unit = _unitsOfMeasurementServices.GetUnitNameById(item.UnitOfMeasurementId)
+                });
+            }
+            return View(list);
         }
 
         public IActionResult Privacy()
