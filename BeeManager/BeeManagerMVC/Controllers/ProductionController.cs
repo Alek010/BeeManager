@@ -2,6 +2,7 @@
 using BeeManagerLibrary.Services;
 using BeeManagerMVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,39 @@ namespace BeeManagerMVC.Controllers
                 });
             }
             return View(list);
+        }
+
+        public IActionResult Edit(int Id)
+        {
+            var prod = _productionServices.GetProductionById(Id);
+            var prodModel = new ProductionModel
+            {
+                Id = prod.Id,
+                Date = prod.Date.ToShortDateString(),
+                Product = _productServices.GetProductNameById(prod.ProductId),
+                Quantity = prod.Quantity,
+                Units = _unitsOfMeasurementServices.GetUnitNameById(prod.UnitsOfMeasurementId)
+
+            };
+            //ViewBag.Product = _productServices.GetProductsList();
+            ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
+            //ViewBag.UnitsOfMeasurement = _unitsOfMeasurementServices.GetUnitsList();
+            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
+
+            return View(prodModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit([Bind(include: "Id, Date, Product, Quantity, Units")]ProductionModel model)
+        {
+            _productionServices.UpdateProductionById(
+                model.Id, 
+                DateTime.Parse(model.Date), 
+                _productServices.GetProductIdByName(model.Product), 
+                model.Quantity, 
+                _unitsOfMeasurementServices.GetUnitIdByName(model.Units)
+                );
+            return RedirectToAction("Index");
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<BeeManagerMVC.Models.ProductionModel>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Production";
 }
 
 <div class="text-center">
@@ -16,13 +16,18 @@
             </tr>
             @foreach (var d in Model)
             {
-                <tr>
-                    <td>@d.Id</td>
-                    <td>@d.Date</td>
-                    <td>@d.Product</td>
-                    <td>@d.Quantity</td>
-                    <td>@d.Units</td>
-                </tr>
+        <tr>
+            <td>@d.Id</td>
+            <td>@d.Date</td>
+            <td>@d.Product</td>
+            <td>@d.Quantity</td>
+            <td>@d.Units</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = d.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = d.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = d.Id })
+            </td>
+        </tr>
             }
         </table>
 </div>
