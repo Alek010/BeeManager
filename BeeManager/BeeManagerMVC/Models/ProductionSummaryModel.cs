@@ -1,4 +1,6 @@
-﻿namespace BeeManagerMVC.Models
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace BeeManagerMVC.Models
 {
     public class ProductionSummaryModel
     {
@@ -6,5 +8,6 @@
         public string ProductName { get; set; }
         public double Quantity { get; set; }
         public string Unit { get; set; }
+
     }
 }
