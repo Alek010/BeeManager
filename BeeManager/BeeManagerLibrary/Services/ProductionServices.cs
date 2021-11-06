@@ -59,6 +59,11 @@ namespace BeeManagerLibrary.Services
         {
             _productionStorage.UpdateProductionById(id, date, productId, quantity, unitsOfMeasurementId);
         }
+
+        public Production GetProductionById(int id)
+        {
+            return _productionStorage.GetProductionById(id);
+        }
     }
 }
 

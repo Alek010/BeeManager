@@ -1,5 +1,7 @@
-﻿using BeeManagerLibrary.Repository;
+﻿using BeeManagerLibrary.Models;
+using BeeManagerLibrary.Repository;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BeeManagerLibrary.Services
@@ -19,6 +21,13 @@ namespace BeeManagerLibrary.Services
             return unitsOfMeasurementList.FirstOrDefault(p => p.Id == id).Unit;
         }
 
+        public int GetUnitIdByName(string name)
+        {
+            var productList = _unitsOfMeasurementStorage.GetUnitsList();
+
+            return productList.Find(p => p.Unit == name).Id;
+        }
+
         public void UpdateUnit(int id, string unitName)
         {
             _unitsOfMeasurementStorage.UpdateUnit(id, unitName);
@@ -32,6 +41,11 @@ namespace BeeManagerLibrary.Services
         public void DeleteUnitById(int id)
         {
             _unitsOfMeasurementStorage.DeleteUnitById(id);
+        }
+
+        public List<UnitsOfMeasurement> GetUnitsList()
+        {
+            return _unitsOfMeasurementStorage.GetUnitsList();
         }
 
 

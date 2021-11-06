@@ -2,6 +2,7 @@
 using BeeManagerLibrary.Services;
 using BeeManagerMVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,67 @@ namespace BeeManagerMVC.Controllers
                 });
             }
             return View(list);
+        }
+
+        public IActionResult Edit(int Id)
+        {
+            var prod = _productionServices.GetProductionById(Id);
+            var prodModel = new ProductionModel
+            {
+                Id = prod.Id,
+                Date = prod.Date.ToShortDateString(),
+                Product = _productServices.GetProductNameById(prod.ProductId),
+                Quantity = prod.Quantity,
+                Units = _unitsOfMeasurementServices.GetUnitNameById(prod.UnitsOfMeasurementId)
+
+            };
+
+            ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
+            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
+
+            return View(prodModel);
+        }
+
+        [HttpPost]
+        public IActionResult Edit([Bind(include: "Id, Date, Product, Quantity, Units")]ProductionModel model)
+        {
+            _productionServices.UpdateProductionById(
+                model.Id,
+                DateTime.Parse(model.Date),
+                _productServices.GetProductIdByName(model.Product),
+                model.Quantity,
+                _unitsOfMeasurementServices.GetUnitIdByName(model.Units)
+                );
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Create()
+        {
+            ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
+            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create([Bind(include: "Id, Date, Product, Quantity, Units")] ProductionModel model)
+        {
+            var prodModel = new Production
+            {
+                Date = DateTime.Parse(model.Date),
+                ProductId = _productServices.GetProductIdByName(model.Product),
+                Quantity = model.Quantity,
+                UnitsOfMeasurementId = _unitsOfMeasurementServices.GetUnitIdByName(model.Units)
+            };
+
+            _productionServices.AddProduction(prodModel);
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Delete (int id)
+        {
+            _productionServices.DeleteProductionById(id);
+            return RedirectToAction("Index");
         }
     }
 }
