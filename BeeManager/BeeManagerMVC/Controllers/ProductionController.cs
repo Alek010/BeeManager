@@ -93,5 +93,11 @@ namespace BeeManagerMVC.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public IActionResult Delete (int id)
+        {
+            _productionServices.DeleteProductionById(id);
+            return RedirectToAction("Index");
+        }
     }
 }
