@@ -51,9 +51,8 @@ namespace BeeManagerMVC.Controllers
                 Units = _unitsOfMeasurementServices.GetUnitNameById(prod.UnitsOfMeasurementId)
 
             };
-            //ViewBag.Product = _productServices.GetProductsList();
+
             ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
-            //ViewBag.UnitsOfMeasurement = _unitsOfMeasurementServices.GetUnitsList();
             ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
 
             return View(prodModel);
@@ -63,12 +62,35 @@ namespace BeeManagerMVC.Controllers
         public IActionResult Edit([Bind(include: "Id, Date, Product, Quantity, Units")]ProductionModel model)
         {
             _productionServices.UpdateProductionById(
-                model.Id, 
-                DateTime.Parse(model.Date), 
-                _productServices.GetProductIdByName(model.Product), 
-                model.Quantity, 
+                model.Id,
+                DateTime.Parse(model.Date),
+                _productServices.GetProductIdByName(model.Product),
+                model.Quantity,
                 _unitsOfMeasurementServices.GetUnitIdByName(model.Units)
                 );
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Create()
+        {
+            ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
+            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create([Bind(include: "Id, Date, Product, Quantity, Units")] ProductionModel model)
+        {
+            var prodModel = new Production
+            {
+                Date = DateTime.Parse(model.Date),
+                ProductId = _productServices.GetProductIdByName(model.Product),
+                Quantity = model.Quantity,
+                UnitsOfMeasurementId = _unitsOfMeasurementServices.GetUnitIdByName(model.Units)
+            };
+
+            _productionServices.AddProduction(prodModel);
+
             return RedirectToAction("Index");
         }
     }
