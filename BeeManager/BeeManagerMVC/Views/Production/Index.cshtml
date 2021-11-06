@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<BeeManagerMVC.Models.ProductionModel>
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Production";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Production</h1>
+<div>
+    <h1 class="display-4 text-center">Production</h1>
+    <p>@Html.ActionLink("Create", "Create", new {  }, new { @class = "btn btn-primary" })</p>
         <table class="table table-bordered table-hover">
             <tr>
                 <th>Id </th>
@@ -16,13 +17,17 @@
             </tr>
             @foreach (var d in Model)
             {
-                <tr>
-                    <td>@d.Id</td>
-                    <td>@d.Date</td>
-                    <td>@d.Product</td>
-                    <td>@d.Quantity</td>
-                    <td>@d.Units</td>
-                </tr>
+        <tr>
+            <td>@d.Id</td>
+            <td>@d.Date</td>
+            <td>@d.Product</td>
+            <td>@d.Quantity</td>
+            <td>@d.Units</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = d.Id }, new { @class = "btn btn-secondary" })
+                @Html.ActionLink("Delete", "Delete", new { id = d.Id }, new { onclick = "return confirm('Are you sure you wish to delete this article?');", @class = "btn btn-danger" })
+            </td>
+        </tr>
             }
         </table>
 </div>

@@ -2,6 +2,7 @@
 using BeeManagerLibrary.Services;
 using BeeManagerMVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -14,19 +15,56 @@ namespace BeeManagerMVC.Controllers
     public class HomeController : Controller
     {
         private readonly IProductionServices _productionServices;
-
-        private readonly IProductionStorage _productionStorage;
-        public HomeController(IProductionServices productionServices, IProductionStorage productionStorage)
+        private readonly IProductServices _productServices;
+        private readonly IUnitsOfMeasurementServices _unitsOfMeasurementServices;
+        public HomeController(IProductionServices productionServices, IProductServices productServices, IUnitsOfMeasurementServices unitsOfMeasurementServices)
         {
             _productionServices = productionServices;
-            _productionStorage = productionStorage;
+            _productServices = productServices;
+            _unitsOfMeasurementServices = unitsOfMeasurementServices;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string productName, string year)
         {
-            var productionList = _productionServices.GetAllProductionRecords();
-            return View("Index", productionList);
+            var productionSummary = _productionServices.GetAllProductionSummaryRecords();
+
+            if (!string.IsNullOrEmpty(productName))
+            {
+                productionSummary = _productionServices.GetFilteredProductionSummaryRecords(productName);
+            }
+
+            if (!string.IsNullOrEmpty(year))
+            {
+                productionSummary = _productionServices.GetFilteredProductionSummaryRecords(int.Parse(year));
+            }
+
+            if (!string.IsNullOrEmpty(productName) && !string.IsNullOrEmpty(year))
+            {
+                productionSummary = _productionServices.GetFilteredProductionSummaryRecords(int.Parse(year), productName);
+            }
+         
+
+            var productionSummaryViewModel = new ProductionSummaryViewModel()
+            {
+                Products = new SelectList(_productServices.GetProductsList().Select(s => s.Name)),
+
+                Years = new SelectList(_productionServices.GetAllProductionSummaryRecords().OrderBy(o => o.Year).Select(s => s.Year).Distinct().ToList()),
+
+                ProductionSummary = productionSummary.Select(x => new ProductionSummaryModel()
+                                                        {
+                                                            Year = x.Year,
+                                                            ProductName = _productServices.GetProductNameById(x.ProductId),
+                                                            Quantity = x.Quantity,
+                                                            Unit = _unitsOfMeasurementServices.GetUnitNameById(x.UnitOfMeasurementId)
+                                                        })
+                                                     .ToList()
+
+            };
+
+            return View(productionSummaryViewModel);
         }
+
+
 
         public IActionResult Privacy()
         {

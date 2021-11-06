@@ -1,7 +1,7 @@
 ﻿
 namespace BeeManagerLibrary.Models
 {
-    class TransactionObject
+    class TransactionObject : BaseEntity
     {
         public int Id { get; set; }
         public int TypeId { get; set; }

@@ -2,7 +2,7 @@
 
 namespace BeeManagerLibrary.Models
 {
-    public class Transaction
+    public class Transaction : BaseEntity
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }

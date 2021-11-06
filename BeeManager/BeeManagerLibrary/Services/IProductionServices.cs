@@ -15,5 +15,6 @@ namespace BeeManagerLibrary.Services
         void AddProduction(Production production);
         void DeleteProductionById(int id);
         void UpdateProductionById(int id, DateTime date, int productId, double quantity, int unitsOfMeasurementId);
+        Production GetProductionById(int id);
     }
 }
