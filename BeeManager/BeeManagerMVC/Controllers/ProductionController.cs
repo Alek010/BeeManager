@@ -21,22 +21,34 @@ namespace BeeManagerMVC.Controllers
             _productServices = productServices;
             _unitsOfMeasurementServices = unitsOfMeasurementServices;
         }
-        public IActionResult Index()
+        public IActionResult Index(string year)
         {
             var productionList = _productionServices.GetAllProductionRecords();
-            var list = new List<ProductionModel>();
-            foreach (var item in productionList)
+
+            if (!string.IsNullOrEmpty(year))
             {
-                list.Add(new ProductionModel 
-                { 
-                    Id = item.Id,
-                    Date = item.Date.ToShortDateString(),
-                    Product = _productServices.GetProductNameById(item.ProductId),
-                    Quantity = item.Quantity,
-                    Units = _unitsOfMeasurementServices.GetUnitNameById(item.UnitsOfMeasurementId)
-                });
+                productionList = _productionServices.GetFilteredProductionRecords(int.Parse(year));
             }
-            return View(list);
+
+            var productionViewModel = new ProductionViewModel()
+            {
+                Years = new SelectList(_productionServices.GetAllProductionRecords().GroupBy(g => g.Date.Year)
+                                                                                    .Select(s => s.Key.ToString())
+                                                                                    .ToList()),
+
+                Production = productionList.Select(x => new ProductionModel()
+                                                        {
+                                                         Id = x.Id,
+                                                         Date = x.Date.ToShortDateString(),
+                                                         Product = _productServices.GetProductNameById(x.ProductId),
+                                                         Quantity = x.Quantity,
+                                                         Units = _unitsOfMeasurementServices.GetUnitNameById(x.UnitsOfMeasurementId)
+
+                })
+                                            .ToList()
+            };
+
+            return View(productionViewModel);
         }
 
         public IActionResult Edit(int Id)
