@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BeeManagerMVC.Models.ProductionModel>
+﻿@model BeeManagerMVC.Models.ProductionViewModel
 
 @{
     ViewData["Title"] = "Production";
@@ -6,28 +6,40 @@
 
 <div>
     <h1 class="display-4 text-center">Production</h1>
-    <p>@Html.ActionLink("Create", "Create", new {  }, new { @class = "btn btn-primary" })</p>
-        <table class="table table-bordered table-hover">
-            <tr>
-                <th>Id </th>
-                <th>Date</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Unit</th>
-            </tr>
-            @foreach (var d in Model)
-            {
+    <p>@Html.ActionLink("Create", "Create", new { }, new { @class = "btn btn-primary" })</p>
+
+    <form asp-controller="Production" asp-action="Index" method="get">
+        <p>
+            Year: <select asp-for="Year" asp-items="Model.Years">
+                <option value="">All</option>
+            </select>
+
+            <input type="submit" value="Filter" />
+
+        </p>
+    </form>
+
+    <table class="table table-bordered table-hover">
         <tr>
-            <td>@d.Id</td>
-            <td>@d.Date</td>
-            <td>@d.Product</td>
-            <td>@d.Quantity</td>
-            <td>@d.Units</td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = d.Id }, new { @class = "btn btn-secondary" })
-                @Html.ActionLink("Delete", "Delete", new { id = d.Id }, new { onclick = "return confirm('Are you sure you wish to delete this article?');", @class = "btn btn-danger" })
-            </td>
+            <th>Id </th>
+            <th>Date</th>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Unit</th>
         </tr>
-            }
-        </table>
+        @foreach (var d in Model.Production)
+        {
+            <tr>
+                <td>@d.Id</td>
+                <td>@d.Date</td>
+                <td>@d.Product</td>
+                <td>@d.Quantity</td>
+                <td>@d.Units</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = d.Id }, new { @class = "btn btn-secondary" })
+                    @Html.ActionLink("Delete", "Delete", new { id = d.Id }, new { onclick = "return confirm('Are you sure you wish to delete this article?');", @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+    </table>
 </div>
