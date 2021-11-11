@@ -1,5 +1,5 @@
 ﻿using BeeManagerLibrary.Models;
-using BeeManagerLibrary.Repository;
+using BeeManagerLibrary.Exceptions;
 using BeeManagerLibrary.Services;
 using BM_ConsoleUI.Views;
 using System;
@@ -37,6 +37,17 @@ namespace BM_ConsoleUI
             Id = int.Parse(Console.ReadLine());
             Console.Write($"Type new product name to be updated: ");
             newProductName = Console.ReadLine();
+
+
+            try
+            {
+                _productServices.GetProductNameById(Id);
+            }
+            catch (ProductNotFoundException message)
+            {
+                Console.WriteLine(message);
+            }
+
 
             _productServices.UpdateProduct(Id, newProductName);
 

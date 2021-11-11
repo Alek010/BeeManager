@@ -1,4 +1,5 @@
-﻿using BeeManagerLibrary.Models;
+﻿using BeeManagerLibrary.Exceptions;
+using BeeManagerLibrary.Models;
 using BeeManagerLibrary.Repository;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,23 @@ namespace BeeManagerLibrary.Services
         {
             var productList = _productStorage.GetProductsList();
 
-            return productList.FirstOrDefault(p => p.Id == id).Name;
+            if(productList.Find(f => f.Id == id) == null)
+            {
+                throw new ProductNotFoundException($"There is no product with ID number: {id}.");
+            }
+
+            string productName = productList.FirstOrDefault(p => p.Id == id).Name;
+
+            return productName;
         }
 
         public int GetProductIdByName(string name)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ProductNameIsNullOrWhiteSpaceException($"Entered string of productName is null, empty or white space");
+            }
+
             var productList = _productStorage.GetProductsList();
 
             return productList.Find(p => p.Name == name).Id;
@@ -45,6 +58,11 @@ namespace BeeManagerLibrary.Services
         public List<Product> GetProductsList()
         {
            return _productStorage.GetProductsList();
+        }
+
+        public Product GetProductById(int id)
+        {
+            return _productStorage.GetProductById(id);
         }
 
     }
