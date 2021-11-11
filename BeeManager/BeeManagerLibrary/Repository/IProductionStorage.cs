@@ -8,13 +8,13 @@ namespace BeeManagerLibrary.Repository
     {
         void AddProduction(Production production);
         void DeleteProductionById(int id);
-        Production GetProductionById(int id);
+        Production GetProductionRecordById(int id);
         List<Production> GetFullProductionList();
         List<Production> GetFilteredProductionList(int Year);
         List<ProductionSummary> GetFilteredProductionSummary(int year, string productName);
         List<ProductionSummary> GetFilteredProductionSummary(string productName);
         List<ProductionSummary> GetFilteredProductionSummary(int year);
         List<ProductionSummary> GetFullProductionSummary();
-        void UpdateProductionById(int id, DateTime date, int productId, double quantity, int unitsOfMeasurementId);
+        void UpdateProductionRecordById(int id, DateTime date, int productId, double quantity, int unitsOfMeasurementId);
     }
 }

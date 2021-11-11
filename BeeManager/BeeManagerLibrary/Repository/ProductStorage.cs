@@ -1,4 +1,5 @@
-﻿using BeeManagerLibrary.Models;
+﻿using BeeManagerLibrary.Exceptions;
+using BeeManagerLibrary.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,12 +20,25 @@ namespace BeeManagerLibrary.Repository
 
         public Product GetProductById(int id)
         {
-            return _beeManagerContext.Products.SingleOrDefault(p => p.Id == id);
+            var product = _beeManagerContext.Products.SingleOrDefault(p => p.Id == id);
+
+            if (product == null)
+            {
+                throw new ProductNotFoundException($"Product with ID number: {id} not found");
+            }
+
+            return product;
         }
 
         public void DeleteProductById(int id)
         {
             var product = GetProductById(id);
+
+            if (product == null)
+            {
+                throw new ProductNotFoundException($"Product with ID number: {id} not found");
+            }
+
             _beeManagerContext.Products.Remove(product);
 
             _beeManagerContext.SaveChanges();
@@ -32,17 +46,34 @@ namespace BeeManagerLibrary.Repository
 
         public void AddProduct(string productName)
         {
+            if (string.IsNullOrWhiteSpace(productName))
+            {
+                throw new ProductNameIsNullOrWhiteSpaceException($"Entered string of productName is null, empty or white space");
+            }
+
             _beeManagerContext.Add(new Product()
             {
                 Name = productName
             });
+
             _beeManagerContext.SaveChanges();
         }
 
         public void UpdateProduct(int id, string productName)
         {
             var product = GetProductById(id);
+
             product.Name = productName;
+
+            if (product == null)
+            {
+                throw new ProductNotFoundException($"Product with {id} number not found");
+            }
+
+            if (string.IsNullOrWhiteSpace(product.Name))
+            {
+                throw new ProductNameIsNullOrWhiteSpaceException($"Entered string of productName is null, empty or white space");
+            }
 
             _beeManagerContext.Update(product);
 
@@ -56,7 +87,12 @@ namespace BeeManagerLibrary.Repository
 
         public int GetProductIdByName(string name)
         {
-            return _beeManagerContext.Products.ToList().Find(p => p.Name == name).Id;
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ProductNameIsNullOrWhiteSpaceException($"Entered string of productName is null, empty or white space");
+            }
+
+            return _beeManagerContext.Products.First(p => p.Name == name).Id;
         }
     }
 }
