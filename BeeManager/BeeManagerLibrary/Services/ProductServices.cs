@@ -23,9 +23,7 @@ namespace BeeManagerLibrary.Services
                 throw new ProductNotFoundException($"There is no product with ID number: {id}.");
             }
 
-            string productName = productList.FirstOrDefault(p => p.Id == id).Name;
-
-            return productName;
+            return productList.FirstOrDefault(p => p.Id == id).Name;
         }
 
         public int GetProductIdByName(string name)
@@ -36,6 +34,11 @@ namespace BeeManagerLibrary.Services
             }
 
             var productList = _productStorage.GetProductsList();
+
+            if (productList.First(f => f.Name == name) == null)
+            {
+                throw new ProductNotFoundException($"Product with name: {name} not found");
+            }
 
             return productList.Find(p => p.Name == name).Id;
         }
