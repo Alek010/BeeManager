@@ -39,7 +39,7 @@ namespace BeeManagerMVC.Controllers
                 Production = productionList.Select(x => new ProductionModel()
                                                         {
                                                          Id = x.Id,
-                                                         Date = x.Date.ToShortDateString(),
+                                                         Date = x.Date,
                                                          Product = _productServices.GetProductNameById(x.ProductId),
                                                          Quantity = x.Quantity,
                                                          Units = _unitsOfMeasurementServices.GetUnitNameById(x.UnitsOfMeasurementId)
@@ -57,7 +57,7 @@ namespace BeeManagerMVC.Controllers
             var prodModel = new ProductionModel
             {
                 Id = prod.Id,
-                Date = prod.Date.ToShortDateString(),
+                Date = prod.Date,
                 Product = _productServices.GetProductNameById(prod.ProductId),
                 Quantity = prod.Quantity,
                 Units = _unitsOfMeasurementServices.GetUnitNameById(prod.UnitsOfMeasurementId)
@@ -75,11 +75,12 @@ namespace BeeManagerMVC.Controllers
         {
             _productionServices.UpdateProductionById(
                 model.Id,
-                DateTime.Parse(model.Date),
+                model.Date,
                 _productServices.GetProductIdByName(model.Product),
                 model.Quantity,
                 _unitsOfMeasurementServices.GetUnitIdByName(model.Units)
                 );
+
             return RedirectToAction("Index");
         }
 
@@ -95,7 +96,7 @@ namespace BeeManagerMVC.Controllers
         {
             var prodModel = new Production
             {
-                Date = DateTime.Parse(model.Date),
+                Date = model.Date,
                 ProductId = _productServices.GetProductIdByName(model.Product),
                 Quantity = model.Quantity,
                 UnitsOfMeasurementId = _unitsOfMeasurementServices.GetUnitIdByName(model.Units)
