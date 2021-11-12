@@ -56,7 +56,7 @@ namespace BeeManagerLibrary.Tests
 
                 int lastId = mockProductionStorage.GetFullProductionList().LastOrDefault().Id;
 
-                double newQuantity = mockProductionStorage.GetProductionById(lastId).Quantity;
+                double newQuantity = mockProductionStorage.GetProductionRecordById(lastId).Quantity;
 
                 Assert.True(newQuantity == newProduction.Quantity, $"{newProduction} wasn't last added Product.");
             }
@@ -72,7 +72,7 @@ namespace BeeManagerLibrary.Tests
             {
                 var mockProductionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
 
-                var newProd = mockProductionStorage.GetProductionById(id);
+                var newProd = mockProductionStorage.GetProductionRecordById(id);
 
                 Assert.True(newProd.Id == id, $"Wrong Id");
             }
@@ -200,9 +200,9 @@ namespace BeeManagerLibrary.Tests
 
                 var mockProductionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
 
-                mockProductionStorage.UpdateProductionById(1, new DateTime(2019, 9, 20), 2, 100.55, 2);
+                mockProductionStorage.UpdateProductionRecordById(1, new DateTime(2019, 9, 20), 2, 100.55, 2);
 
-                var actual = mockProductionStorage.GetProductionById(1);
+                var actual = mockProductionStorage.GetProductionRecordById(1);
 
                 Assert.Equal(expected.Id, actual.Id);
                 Assert.Equal(expected.ProductId, actual.ProductId);

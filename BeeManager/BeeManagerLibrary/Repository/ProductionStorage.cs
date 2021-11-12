@@ -1,4 +1,5 @@
-﻿using BeeManagerLibrary.Models;
+﻿using BeeManagerLibrary.Exceptions;
+using BeeManagerLibrary.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,31 +28,50 @@ namespace BeeManagerLibrary.Repository
                 Quantity = production.Quantity,
                 UnitsOfMeasurementId = production.UnitsOfMeasurementId
             });
+
             _beeManagerContext.SaveChanges();
         }
 
-        public Production GetProductionById(int id)
+        public Production GetProductionRecordById(int id)
         {
-            return _beeManagerContext.Production.SingleOrDefault(p => p.Id == id);
+            var productionRecord = _beeManagerContext.Production.SingleOrDefault(p => p.Id == id);
+
+            if (productionRecord == null)
+            {
+                throw new ProductionRecordNotFoundException($"Production record with ID number: {id} not found");
+            }
+
+            return productionRecord;
         }
         public void DeleteProductionById(int id)
         {
-            var product = GetProductionById(id);
-            _beeManagerContext.Production.Remove(product);
+            var productionRecord = GetProductionRecordById(id);
+
+            if (productionRecord == null)
+            {
+                throw new ProductionRecordNotFoundException($"Production record with ID number: {id} not found");
+            }
+
+            _beeManagerContext.Production.Remove(productionRecord);
 
             _beeManagerContext.SaveChanges();
         }
 
-        public void UpdateProductionById(int id, DateTime date, int productId, double quantity, int unitsOfMeasurementId)
+        public void UpdateProductionRecordById(int id, DateTime date, int productId, double quantity, int unitsOfMeasurementId)
         {
-            var production = GetProductionById(id);
+            var productionRecord = GetProductionRecordById(id);
 
-            production.Date = date;
-            production.ProductId = productId;
-            production.Quantity = quantity;
-            production.UnitsOfMeasurementId = unitsOfMeasurementId;
+            if (productionRecord == null)
+            {
+                throw new ProductionRecordNotFoundException($"Production record with ID number: {id} not found");
+            }
 
-            _beeManagerContext.Update(production);
+            productionRecord.Date = date;
+            productionRecord.ProductId = productId;
+            productionRecord.Quantity = quantity;
+            productionRecord.UnitsOfMeasurementId = unitsOfMeasurementId;
+
+            _beeManagerContext.Update(productionRecord);
 
             _beeManagerContext.SaveChanges();
         }
