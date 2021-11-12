@@ -35,7 +35,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control dotcheck" } })
             @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -72,5 +72,14 @@
       changemonth: true,
       changeyear: true});
         });
+    </script>
+    <script>
+        jQuery( document ).ready(function() {
+    jQuery(".dotcheck").on("keydown", function(e) { 
+        if(e.keyCode === 190) { this.value += ",";           
+        e.preventDefault(); }
+    });    
+  
+});
     </script>
 }

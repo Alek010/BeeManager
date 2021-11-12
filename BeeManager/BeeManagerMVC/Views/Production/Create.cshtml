@@ -19,7 +19,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control datepicker", @type= "text" } })
+            @Html.EditorFor(model => model.Date,"Please select", new { htmlAttributes = new { @class = "form-control datepicker", @type= "text" } })
             @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -27,7 +27,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Product, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Product, (SelectList)ViewBag.Product, new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.Product, (SelectList)ViewBag.Product,"Please select", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Product, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -35,7 +35,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control dotcheck" } })
             @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -43,7 +43,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Units, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownListFor(model => model.Units, (SelectList)ViewBag.UnitsOfMeasurement, new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.Units, (SelectList)ViewBag.UnitsOfMeasurement,"Please select" , new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.Units, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -71,5 +71,14 @@
       changemonth: true,
       changeyear: true});
         });
+    </script>
+    <script>
+        jQuery( document ).ready(function() {
+    jQuery(".dotcheck").on("keydown", function(e) { 
+        if(e.keyCode === 190) { this.value += ",";           
+        e.preventDefault(); }
+    });    
+  
+});
     </script>
 }
