@@ -24,7 +24,7 @@ namespace BeeManagerLibrary.Repository
 
             if (unit == null)
             {
-                throw new MeasurementUnitNotFoundException($"Measurement unit with ID number: {id} not found");
+                throw new MeasurementUnitNotFoundException(ExceptionMessage.MeasurementUnitNotFound(id));
             }
 
             return unit;
@@ -36,7 +36,7 @@ namespace BeeManagerLibrary.Repository
 
             if (unit == null)
             {
-                throw new MeasurementUnitNotFoundException($"Measurement unit with ID number: {id} not found");
+                throw new MeasurementUnitNotFoundException(ExceptionMessage.MeasurementUnitNotFound(id));
             }
 
             _beeManagerContext.UnitsOfMeasurements.Remove(unit);
@@ -48,7 +48,7 @@ namespace BeeManagerLibrary.Repository
         {
             if (string.IsNullOrWhiteSpace(unitName))
             {
-                throw new MeasurementUnitNameIsNullOrWhiteSpaceException($"Entered string of measurement unit is null, empty or white space");
+                throw new MeasurementUnitNameIsNullOrWhiteSpaceException(ExceptionMessage.MeasurementUnitNameIsNullOrWhiteSpace());
             }
 
             _beeManagerContext.Add(new UnitsOfMeasurement()
@@ -67,12 +67,12 @@ namespace BeeManagerLibrary.Repository
 
             if (unit == null)
             {
-                throw new MeasurementUnitNotFoundException($"Measurement unit with ID number: {id} not found");
+                throw new MeasurementUnitNotFoundException(ExceptionMessage.MeasurementUnitNotFound(id));
             }
 
             if (string.IsNullOrWhiteSpace(unit.Unit))
             {
-                throw new MeasurementUnitNameIsNullOrWhiteSpaceException($"Entered string of measurement unit is null, empty or white space");
+                throw new MeasurementUnitNameIsNullOrWhiteSpaceException(ExceptionMessage.MeasurementUnitNameIsNullOrWhiteSpace());
             }
 
             _beeManagerContext.Update(unit);
