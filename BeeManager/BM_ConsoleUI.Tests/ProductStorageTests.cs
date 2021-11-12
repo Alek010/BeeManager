@@ -1,5 +1,7 @@
-﻿using BeeManagerLibrary.Models;
+﻿using BeeManagerLibrary.Exceptions;
+using BeeManagerLibrary.Models;
 using BeeManagerLibrary.Repository;
+using System;
 using System.Linq;
 using Xunit;
 
@@ -54,6 +56,16 @@ namespace BeeManagerLibrary.Tests
             var newProd = mockProductStorage.GetProductById(id);
 
             Assert.True(newProd.Id == id, $"Wrong Id");
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(10000000)]
+        public void GetProductById_WhenInvalidIdEntered_ThenThrowProductNotFoundException(int id)
+        {
+            var mockProductStorage = new ProductStorage(fixture.BeeManagerTestDb);
+
+            Assert.Throws<ProductNotFoundException>(() => mockProductStorage.GetProductById(id));
         }
 
         [Fact]
