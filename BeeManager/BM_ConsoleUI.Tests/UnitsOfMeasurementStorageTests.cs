@@ -1,4 +1,5 @@
-﻿using BeeManagerLibrary.Models;
+﻿using BeeManagerLibrary.Exceptions;
+using BeeManagerLibrary.Models;
 using BeeManagerLibrary.Repository;
 using System.Linq;
 using Xunit;
@@ -26,6 +27,17 @@ namespace BeeManagerLibrary.Tests
             int lengthAfter = mockUnitsStorage.GetUnitsList().Count();
 
             Assert.True(lengthBefore + 1 == lengthAfter);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        public void AddUnit_WhenMeasurementUnitNameIsNullOrWhiteSpace_ThenThrowMeasurementUnitNameIsNullOrWhiteSpaceException(string unitName)
+        {
+            var mockUnitsStorage = new UnitsOfMeasurementStorage(fixture.BeeManagerTestDb);
+
+            Assert.Throws<MeasurementUnitNameIsNullOrWhiteSpaceException>(() => mockUnitsStorage.AddUnit(unitName));
         }
 
         [Fact]
@@ -56,6 +68,16 @@ namespace BeeManagerLibrary.Tests
             Assert.True(newProd.Id == id, $"Wrong Id");
         }
 
+        [Theory]
+        [InlineData(0)]
+        [InlineData(100000)]
+        public void GetUnitById_WhenInvalidIdEntered_ThenThrowMeasurementUnitNotFoundException(int id)
+        {
+            var mockUnitsStorage = new UnitsOfMeasurementStorage(fixture.BeeManagerTestDb);
+
+            Assert.Throws<MeasurementUnitNotFoundException>(() => mockUnitsStorage.GetUnitById(id));
+        }
+
         [Fact]
         public void DeleteUnitnById_WhenUnitDeleted_ThenItShouldBeRemovedFromStorage()
         {
@@ -72,6 +94,17 @@ namespace BeeManagerLibrary.Tests
             Assert.True(lengthBefore - 1 == lengthAfter);
         }
 
+        [Theory]
+        [InlineData(0)]
+        [InlineData(100000)]
+        public void DeleteUnitnById_WhenInvalidIdEntered_ThenThrowMeasurementUnitNotFoundException(int id)
+        {
+            var mockUnitsStorage = new UnitsOfMeasurementStorage(fixture.BeeManagerTestDb);
+
+            Assert.Throws<MeasurementUnitNotFoundException>(() => mockUnitsStorage.DeleteUnitById(id));
+        }
+
+
         [Fact]
         public void UpdateProductById_WhenMethodCalled_ThenProductNameUpdated()
         {
@@ -85,5 +118,27 @@ namespace BeeManagerLibrary.Tests
 
             Assert.Equal(expected.Unit, actual.Unit);
         }
+
+        [Theory]
+        [InlineData(0, "Kilo")]
+        [InlineData(100000, "Grams")]
+        public void UpdateProductById_WhenInvalidIdEntered_ThenThrowMeasurementUnitNotFoundException(int id, string unitName)
+        {
+            var mockUnitsStorage = new UnitsOfMeasurementStorage(fixture.BeeManagerTestDb);
+
+            Assert.Throws<MeasurementUnitNotFoundException>(() => mockUnitsStorage.UpdateUnit(id, unitName));
+        }
+
+        [Theory]
+        [InlineData(1, null)]
+        [InlineData(2, "")]
+        [InlineData(3, " ")]
+        public void UpdateProductById_WhenMeasurementUnitNameIsNullOrWhiteSpace_ThenThrowMeasurementUnitNotFoundException(int id, string unitName)
+        {
+            var mockUnitsStorage = new UnitsOfMeasurementStorage(fixture.BeeManagerTestDb);
+
+            Assert.Throws<MeasurementUnitNameIsNullOrWhiteSpaceException>(() => mockUnitsStorage.UpdateUnit(id, unitName));
+        }
+
     }
 }

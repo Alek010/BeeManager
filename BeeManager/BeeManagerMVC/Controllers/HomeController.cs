@@ -48,7 +48,10 @@ namespace BeeManagerMVC.Controllers
             {
                 Products = new SelectList(_productServices.GetProductsList().Select(s => s.Name)),
 
-                Years = new SelectList(_productionServices.GetAllProductionSummaryRecords().OrderBy(o => o.Year).Select(s => s.Year).Distinct().ToList()),
+                Years = new SelectList(_productionServices.GetAllProductionSummaryRecords().OrderBy(o => o.Year)
+                                                                                           .Select(s => s.Year)
+                                                                                           .Distinct()
+                                                                                           .ToList()),
 
                 ProductionSummary = productionSummary.Select(x => new ProductionSummaryModel()
                                                         {

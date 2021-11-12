@@ -1,4 +1,5 @@
-﻿using BeeManagerLibrary.Models;
+﻿using BeeManagerLibrary.Exceptions;
+using BeeManagerLibrary.Models;
 using BeeManagerLibrary.Repository;
 using System;
 using System.Collections.Generic;
@@ -57,12 +58,19 @@ namespace BeeManagerLibrary.Services
 
         public void UpdateProductionById(int id, DateTime date, int productId, double quantity, int unitsOfMeasurementId)
         {
-            _productionStorage.UpdateProductionById(id, date, productId, quantity, unitsOfMeasurementId);
+            _productionStorage.UpdateProductionRecordById(id, date, productId, quantity, unitsOfMeasurementId);
         }
 
         public Production GetProductionById(int id)
         {
-            return _productionStorage.GetProductionById(id);
+            var productionRecord = _productionStorage.GetProductionRecordById(id);
+
+            if (productionRecord == null)
+            {
+                throw new ProductionRecordNotFoundException($"Production record with ID number: {id} not found");
+            }
+
+            return productionRecord;
         }
     }
 }

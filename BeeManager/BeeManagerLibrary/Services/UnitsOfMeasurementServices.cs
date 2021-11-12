@@ -1,4 +1,5 @@
-﻿using BeeManagerLibrary.Models;
+﻿using BeeManagerLibrary.Exceptions;
+using BeeManagerLibrary.Models;
 using BeeManagerLibrary.Repository;
 using System;
 using System.Collections.Generic;
@@ -18,14 +19,29 @@ namespace BeeManagerLibrary.Services
         {
             var unitsOfMeasurementList = _unitsOfMeasurementStorage.GetUnitsList();
 
+            if (unitsOfMeasurementList.Find(f => f.Id == id) == null)
+            {
+                throw new MeasurementUnitNotFoundException($"Measurement unit with ID number: {id} not found");
+            }
+
             return unitsOfMeasurementList.FirstOrDefault(p => p.Id == id).Unit;
         }
 
         public int GetUnitIdByName(string name)
         {
-            var productList = _unitsOfMeasurementStorage.GetUnitsList();
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new MeasurementUnitNameIsNullOrWhiteSpaceException($"Entered string of measurement unit is null, empty or white space");
+            }
 
-            return productList.Find(p => p.Unit == name).Id;
+            var unitsOfMeasurementList = _unitsOfMeasurementStorage.GetUnitsList();
+
+            if (unitsOfMeasurementList.Find(f => f.Unit == name) == null)
+            {
+                throw new MeasurementUnitNotFoundException($"Measurement unit with name: {name} not found");
+            }
+
+            return unitsOfMeasurementList.Find(p => p.Unit == name).Id;
         }
 
         public void UpdateUnit(int id, string unitName)

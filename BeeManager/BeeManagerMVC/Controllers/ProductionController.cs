@@ -21,22 +21,34 @@ namespace BeeManagerMVC.Controllers
             _productServices = productServices;
             _unitsOfMeasurementServices = unitsOfMeasurementServices;
         }
-        public IActionResult Index()
+        public IActionResult Index(string year)
         {
             var productionList = _productionServices.GetAllProductionRecords();
-            var list = new List<ProductionModel>();
-            foreach (var item in productionList)
+
+            if (!string.IsNullOrEmpty(year))
             {
-                list.Add(new ProductionModel 
-                { 
-                    Id = item.Id,
-                    Date = item.Date.ToShortDateString(),
-                    Product = _productServices.GetProductNameById(item.ProductId),
-                    Quantity = item.Quantity,
-                    Units = _unitsOfMeasurementServices.GetUnitNameById(item.UnitsOfMeasurementId)
-                });
+                productionList = _productionServices.GetFilteredProductionRecords(int.Parse(year));
             }
-            return View(list);
+
+            var productionViewModel = new ProductionViewModel()
+            {
+                Years = new SelectList(_productionServices.GetAllProductionRecords().GroupBy(g => g.Date.Year)
+                                                                                    .Select(s => s.Key.ToString())
+                                                                                    .ToList()),
+
+                Production = productionList.Select(x => new ProductionModel()
+                                                        {
+                                                         Id = x.Id,
+                                                         Date = x.Date,
+                                                         Product = _productServices.GetProductNameById(x.ProductId),
+                                                         Quantity = x.Quantity,
+                                                         Units = _unitsOfMeasurementServices.GetUnitNameById(x.UnitsOfMeasurementId)
+
+                })
+                                            .ToList()
+            };
+
+            return View(productionViewModel);
         }
 
         public IActionResult Edit(int Id)
@@ -45,7 +57,7 @@ namespace BeeManagerMVC.Controllers
             var prodModel = new ProductionModel
             {
                 Id = prod.Id,
-                Date = prod.Date.ToShortDateString(),
+                Date = prod.Date,
                 Product = _productServices.GetProductNameById(prod.ProductId),
                 Quantity = prod.Quantity,
                 Units = _unitsOfMeasurementServices.GetUnitNameById(prod.UnitsOfMeasurementId)
@@ -61,13 +73,21 @@ namespace BeeManagerMVC.Controllers
         [HttpPost]
         public IActionResult Edit([Bind(include: "Id, Date, Product, Quantity, Units")]ProductionModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
+                ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
+                return View(model);
+            }
+
             _productionServices.UpdateProductionById(
                 model.Id,
-                DateTime.Parse(model.Date),
+                model.Date,
                 _productServices.GetProductIdByName(model.Product),
                 model.Quantity,
                 _unitsOfMeasurementServices.GetUnitIdByName(model.Units)
                 );
+
             return RedirectToAction("Index");
         }
 
@@ -75,15 +95,24 @@ namespace BeeManagerMVC.Controllers
         {
             ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
             ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
-            return View();
+            var model = new ProductionModel();
+            model.Date = DateTime.Now;
+            return View(model);
         }
 
         [HttpPost]
         public IActionResult Create([Bind(include: "Id, Date, Product, Quantity, Units")] ProductionModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
+                ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
+                return View(model);
+            }
+
             var prodModel = new Production
             {
-                Date = DateTime.Parse(model.Date),
+                Date = model.Date,
                 ProductId = _productServices.GetProductIdByName(model.Product),
                 Quantity = model.Quantity,
                 UnitsOfMeasurementId = _unitsOfMeasurementServices.GetUnitIdByName(model.Units)
