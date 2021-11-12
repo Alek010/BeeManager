@@ -38,7 +38,7 @@ namespace BeeManagerLibrary.Repository
 
             if (productionRecord == null)
             {
-                throw new ProductionRecordNotFoundException($"Production record with ID number: {id} not found");
+                throw new ProductionRecordNotFoundException(ExceptionMessage.ProductionRecordNotFound(id));
             }
 
             return productionRecord;
@@ -49,7 +49,7 @@ namespace BeeManagerLibrary.Repository
 
             if (productionRecord == null)
             {
-                throw new ProductionRecordNotFoundException($"Production record with ID number: {id} not found");
+                throw new ProductionRecordNotFoundException(ExceptionMessage.ProductionRecordNotFound(id));
             }
 
             _beeManagerContext.Production.Remove(productionRecord);
@@ -63,7 +63,7 @@ namespace BeeManagerLibrary.Repository
 
             if (productionRecord == null)
             {
-                throw new ProductionRecordNotFoundException($"Production record with ID number: {id} not found");
+                throw new ProductionRecordNotFoundException(ExceptionMessage.ProductionRecordNotFound(id));
             }
 
             productionRecord.Date = date;

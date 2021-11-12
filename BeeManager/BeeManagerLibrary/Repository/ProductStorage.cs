@@ -24,7 +24,7 @@ namespace BeeManagerLibrary.Repository
 
             if (product == null)
             {
-                throw new ProductNotFoundException($"Product with ID number: {id} not found");
+                throw new ProductNotFoundException(ExceptionMessage.ProductNotFound(id));
             }
 
             return product;
@@ -36,7 +36,7 @@ namespace BeeManagerLibrary.Repository
 
             if (product == null)
             {
-                throw new ProductNotFoundException($"Product with ID number: {id} not found");
+                throw new ProductNotFoundException(ExceptionMessage.ProductNotFound(id));
             }
 
             _beeManagerContext.Products.Remove(product);
@@ -48,7 +48,7 @@ namespace BeeManagerLibrary.Repository
         {
             if (string.IsNullOrWhiteSpace(productName))
             {
-                throw new ProductNameIsNullOrWhiteSpaceException($"Entered string of productName is null, empty or white space");
+                throw new ProductNameIsNullOrWhiteSpaceException(ExceptionMessage.ProductNameIsNullOrWhiteSpace());
             }
 
             _beeManagerContext.Add(new Product()
@@ -67,12 +67,12 @@ namespace BeeManagerLibrary.Repository
 
             if (product == null)
             {
-                throw new ProductNotFoundException($"Product with {id} number not found");
+                throw new ProductNotFoundException(ExceptionMessage.ProductNotFound(id));
             }
 
             if (string.IsNullOrWhiteSpace(product.Name))
             {
-                throw new ProductNameIsNullOrWhiteSpaceException($"Entered string of productName is null, empty or white space");
+                throw new ProductNameIsNullOrWhiteSpaceException(ExceptionMessage.ProductNameIsNullOrWhiteSpace());
             }
 
             _beeManagerContext.Update(product);
@@ -89,7 +89,7 @@ namespace BeeManagerLibrary.Repository
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ProductNameIsNullOrWhiteSpaceException($"Entered string of productName is null, empty or white space");
+                throw new ProductNameIsNullOrWhiteSpaceException(ExceptionMessage.ProductNameIsNullOrWhiteSpace());
             }
 
             return _beeManagerContext.Products.First(p => p.Name == name).Id;

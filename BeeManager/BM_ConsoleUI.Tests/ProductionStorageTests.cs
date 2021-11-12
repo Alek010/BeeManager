@@ -1,4 +1,5 @@
-﻿using BeeManagerLibrary.Models;
+﻿using BeeManagerLibrary.Exceptions;
+using BeeManagerLibrary.Models;
 using BeeManagerLibrary.Repository;
 using BeeManagerLibrary.Services;
 using System;
@@ -79,6 +80,21 @@ namespace BeeManagerLibrary.Tests
 
         }
 
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1000000)]
+        public void GetProductionById_WhenInvalidIdEntered_ThrowProductionRecordNotFoundException(int id)
+        {
+            using (BeeManagerTestContext fixture = new BeeManagerTestContext())
+            {
+                var mockProductionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
+
+                Assert.Throws<ProductionRecordNotFoundException>(() => mockProductionStorage.GetProductionRecordById(id));
+            }
+
+        }
+
         [Fact]
         public void DeleteProductionById_WhenProductionDeleted_ThenItShouldBeRemovedFromStorage()
         {
@@ -96,6 +112,20 @@ namespace BeeManagerLibrary.Tests
 
                 Assert.True(lengthBefore - 1 == lengthAfter);
             }
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1000000)]
+        public void DeleteProductionById_WhenInvalidIdEntered_ThrowProductionRecordNotFoundException(int id)
+        {
+            using (BeeManagerTestContext fixture = new BeeManagerTestContext())
+            {
+                var mockProductionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
+
+                Assert.Throws<ProductionRecordNotFoundException>(() => mockProductionStorage.DeleteProductionById(id));
+            }
+
         }
 
         [Fact]
@@ -211,6 +241,21 @@ namespace BeeManagerLibrary.Tests
             }
 
         }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1000000)]
+        public void UpdateProductById_WhenInvalidIdEntered_ThrowProductionRecordNotFoundException(int id)
+        {
+            using (BeeManagerTestContext fixture = new BeeManagerTestContext())
+            {
+                var mockProductionStorage = new ProductionStorage(fixture.BeeManagerTestDb);
+
+                Assert.Throws<ProductionRecordNotFoundException>(() => mockProductionStorage.UpdateProductionRecordById(id, new DateTime(2021, 06, 12), 1, 25, 1));
+            }
+
+        }
+
 
         private void AssertEqualityOfProductionLists(List<Production> expected, List<Production> actual)
         {
