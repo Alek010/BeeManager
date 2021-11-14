@@ -40,9 +40,9 @@ namespace BeeManagerMVC.Controllers
                                                         {
                                                          Id = x.Id,
                                                          Date = x.Date,
-                                                         Product = _productServices.GetProductNameById(x.ProductId),
+                                                         Product = x.Products.Name,
                                                          Quantity = x.Quantity,
-                                                         Units = _unitsOfMeasurementServices.GetUnitNameById(x.UnitsOfMeasurementId)
+                                                         Units = x.Units.Unit
 
                 })
                                             .ToList()
@@ -58,9 +58,9 @@ namespace BeeManagerMVC.Controllers
             {
                 Id = prod.Id,
                 Date = prod.Date,
-                Product = _productServices.GetProductNameById(prod.ProductId),
+                Product = prod.Products.Name,
                 Quantity = prod.Quantity,
-                Units = _unitsOfMeasurementServices.GetUnitNameById(prod.UnitsOfMeasurementId)
+                Units = prod.Units.Unit
 
             };
 
@@ -82,9 +82,9 @@ namespace BeeManagerMVC.Controllers
 
             _productionServices.UpdateProductionById(
                 model.Id,
-                model.Date,
+                (DateTime)model.Date,
                 _productServices.GetProductIdByName(model.Product),
-                model.Quantity,
+                (double)model.Quantity,
                 _unitsOfMeasurementServices.GetUnitIdByName(model.Units)
                 );
 
@@ -96,7 +96,6 @@ namespace BeeManagerMVC.Controllers
             ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
             ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
             var model = new ProductionModel();
-            model.Date = DateTime.Now;
             return View(model);
         }
 
@@ -112,9 +111,9 @@ namespace BeeManagerMVC.Controllers
 
             var prodModel = new Production
             {
-                Date = model.Date,
+                Date = (DateTime)model.Date,
                 ProductId = _productServices.GetProductIdByName(model.Product),
-                Quantity = model.Quantity,
+                Quantity = (double)model.Quantity,
                 UnitsOfMeasurementId = _unitsOfMeasurementServices.GetUnitIdByName(model.Units)
             };
 

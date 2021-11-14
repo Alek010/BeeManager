@@ -1,5 +1,6 @@
 ﻿using BeeManagerLibrary.Exceptions;
 using BeeManagerLibrary.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,10 @@ namespace BeeManagerLibrary.Repository
 
         public Production GetProductionRecordById(int id)
         {
-            var productionRecord = _beeManagerContext.Production.SingleOrDefault(p => p.Id == id);
+            var productionRecord = _beeManagerContext.Production
+                .Include(x => x.Products)
+                .Include(x => x.Units)
+                .SingleOrDefault(p => p.Id == id);
 
             if (productionRecord == null)
             {
@@ -78,7 +82,9 @@ namespace BeeManagerLibrary.Repository
 
         public List<Production> GetFullProductionList()
         {
-            return _beeManagerContext.Production.ToList();
+            return _beeManagerContext.Production
+                .Include(x => x.Products)
+                .Include(x => x.Units).ToList();
         }
 
         /// <summary>
