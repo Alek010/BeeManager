@@ -4,9 +4,7 @@ using BeeManagerMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BeeManagerMVC.Controllers
 {
@@ -40,9 +38,9 @@ namespace BeeManagerMVC.Controllers
                                                         {
                                                          Id = x.Id,
                                                          Date = x.Date,
-                                                         Product = _productServices.GetProductNameById(x.ProductId),
+                                                         Product = x.Products.Name,
                                                          Quantity = x.Quantity,
-                                                         Units = _unitsOfMeasurementServices.GetUnitNameById(x.UnitsOfMeasurementId)
+                                                         Units = x.Units.Unit
 
                 })
                                             .ToList()
@@ -58,33 +56,34 @@ namespace BeeManagerMVC.Controllers
             {
                 Id = prod.Id,
                 Date = prod.Date,
-                Product = _productServices.GetProductNameById(prod.ProductId),
+                Product = prod.Products.Name,
                 Quantity = prod.Quantity,
-                Units = _unitsOfMeasurementServices.GetUnitNameById(prod.UnitsOfMeasurementId)
+                Units = prod.Units.Unit
 
             };
 
-            ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
-            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
+            ViewBag.Product = new SelectList(_productServices.GetProductsList().Select(p => p.Name));
+            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList().Select(p => p.Unit));
 
             return View(prodModel);
         }
 
         [HttpPost]
-        public IActionResult Edit([Bind(include: "Id, Date, Product, Quantity, Units")]ProductionModel model)
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ProductionModel model)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
-                ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
+                ViewBag.Product = new SelectList(_productServices.GetProductsList().Select(p =>p.Name));
+                ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList().Select(p => p.Unit));
                 return View(model);
             }
 
             _productionServices.UpdateProductionById(
                 model.Id,
-                model.Date,
+                (DateTime)model.Date,
                 _productServices.GetProductIdByName(model.Product),
-                model.Quantity,
+                (double)model.Quantity,
                 _unitsOfMeasurementServices.GetUnitIdByName(model.Units)
                 );
 
@@ -93,28 +92,28 @@ namespace BeeManagerMVC.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
-            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
+            ViewBag.Product = new SelectList(_productServices.GetProductsList().Select(p => p.Name));
+            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList().Select(p => p.Unit));
             var model = new ProductionModel();
-            model.Date = DateTime.Now;
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Create([Bind(include: "Id, Date, Product, Quantity, Units")] ProductionModel model)
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(ProductionModel model)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
-                ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
+                ViewBag.Product = new SelectList(_productServices.GetProductsList().Select(p => p.Name));
+                ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList().Select(p => p.Unit));
                 return View(model);
             }
 
             var prodModel = new Production
             {
-                Date = model.Date,
+                Date = (DateTime)model.Date,
                 ProductId = _productServices.GetProductIdByName(model.Product),
-                Quantity = model.Quantity,
+                Quantity = (double)model.Quantity,
                 UnitsOfMeasurementId = _unitsOfMeasurementServices.GetUnitIdByName(model.Units)
             };
 

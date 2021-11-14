@@ -21,7 +21,6 @@
 
     <table class="table table-bordered table-hover">
         <tr>
-            <th>Id </th>
             <th>Date</th>
             <th>Product</th>
             <th>Quantity</th>
@@ -30,8 +29,7 @@
         @foreach (var d in Model.Production)
         {
             <tr>
-                <td>@d.Id</td>
-                <td>@d.Date.ToShortDateString()</td>
+                <td>@d.Date.Value.ToShortDateString()</td>
                 <td>@d.Product</td>
                 <td>@d.Quantity</td>
                 <td>@d.Units</td>
