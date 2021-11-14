@@ -13,7 +13,7 @@ namespace BeeManagerMVC.Models
         [Required]
         public string Product { get; set; }
         [Required]
-        [Range(1, 9999999999999999.99, ErrorMessage = "The value should larger than 0 and Max 18 digits")]
+        [Range(1, 9999999999999999.99, ErrorMessage = "The value should be positive and Max 18 digits")]
         public double? Quantity { get; set; }
         [Required]
         public string Units { get; set; }

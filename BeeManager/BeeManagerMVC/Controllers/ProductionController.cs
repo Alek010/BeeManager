@@ -4,9 +4,7 @@ using BeeManagerMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BeeManagerMVC.Controllers
 {
@@ -64,19 +62,20 @@ namespace BeeManagerMVC.Controllers
 
             };
 
-            ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
-            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
+            ViewBag.Product = new SelectList(_productServices.GetProductsList().Select(p => p.Name));
+            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList().Select(p => p.Unit));
 
             return View(prodModel);
         }
 
         [HttpPost]
-        public IActionResult Edit([Bind(include: "Id, Date, Product, Quantity, Units")]ProductionModel model)
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ProductionModel model)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
-                ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
+                ViewBag.Product = new SelectList(_productServices.GetProductsList().Select(p =>p.Name));
+                ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList().Select(p => p.Unit));
                 return View(model);
             }
 
@@ -93,19 +92,20 @@ namespace BeeManagerMVC.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
-            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
+            ViewBag.Product = new SelectList(_productServices.GetProductsList().Select(p => p.Name));
+            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList().Select(p => p.Unit));
             var model = new ProductionModel();
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Create([Bind(include: "Id, Date, Product, Quantity, Units")] ProductionModel model)
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(ProductionModel model)
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Name", "Name");
-                ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Unit", "Unit");
+                ViewBag.Product = new SelectList(_productServices.GetProductsList().Select(p => p.Name));
+                ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList().Select(p => p.Unit));
                 return View(model);
             }
 
