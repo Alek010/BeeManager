@@ -69,15 +69,15 @@
     <script>
         $(function () {
             $(".datepicker").datepicker({dateFormat: "dd.mm.yy",
-      changemonth: true,
-      changeyear: true});
+                changemonth: true,
+                changeyear: true});
         });
     </script>
     <script>
-        jQuery( document ).ready(function() {
-    jQuery(".dotcheck").on("keydown", function(e) { 
-        if(e.keyCode === 190) { this.value += ",";           
-        e.preventDefault(); }
+        $( document ).ready(function() {
+            $(".dotcheck").on("keydown", function(e) { 
+            if(e.keyCode === 190) { this.value += ",";           
+            e.preventDefault(); }
     });    
   
 });
