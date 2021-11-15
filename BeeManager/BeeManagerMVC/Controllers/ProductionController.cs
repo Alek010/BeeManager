@@ -62,8 +62,8 @@ namespace BeeManagerMVC.Controllers
 
             };
 
-            ViewBag.Product = new SelectList(_productServices.GetProductsList().Select(p => p.Name));
-            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList().Select(p => p.Unit));
+            ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Id", "Name");
+            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Id", "Unit");
 
             return View(prodModel);
         }
@@ -74,17 +74,17 @@ namespace BeeManagerMVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Product = new SelectList(_productServices.GetProductsList().Select(p =>p.Name));
-                ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList().Select(p => p.Unit));
+                ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Id", "Name");
+                ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Id", "Unit");
                 return View(model);
             }
 
             _productionServices.UpdateProductionById(
                 model.Id,
                 (DateTime)model.Date,
-                _productServices.GetProductIdByName(model.Product),
+                int.Parse(model.Product),
                 (double)model.Quantity,
-                _unitsOfMeasurementServices.GetUnitIdByName(model.Units)
+                int.Parse(model.Units)
                 );
 
             return RedirectToAction("Index");
@@ -92,8 +92,8 @@ namespace BeeManagerMVC.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.Product = new SelectList(_productServices.GetProductsList().Select(p => p.Name));
-            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList().Select(p => p.Unit));
+            ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Id", "Name");
+            ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Id", "Unit");
             var model = new ProductionModel();
             return View(model);
         }
@@ -104,17 +104,17 @@ namespace BeeManagerMVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Product = new SelectList(_productServices.GetProductsList().Select(p => p.Name));
-                ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList().Select(p => p.Unit));
+                ViewBag.Product = new SelectList(_productServices.GetProductsList(), "Id", "Name");
+                ViewBag.UnitsOfMeasurement = new SelectList(_unitsOfMeasurementServices.GetUnitsList(), "Id", "Unit");
                 return View(model);
             }
 
             var prodModel = new Production
             {
                 Date = (DateTime)model.Date,
-                ProductId = _productServices.GetProductIdByName(model.Product),
+                ProductId = int.Parse(model.Product),
                 Quantity = (double)model.Quantity,
-                UnitsOfMeasurementId = _unitsOfMeasurementServices.GetUnitIdByName(model.Units)
+                UnitsOfMeasurementId = int.Parse(model.Units)
             };
 
             _productionServices.AddProduction(prodModel);
